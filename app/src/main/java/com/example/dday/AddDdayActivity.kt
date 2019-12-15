@@ -1,6 +1,7 @@
 package com.example.dday
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.text.Editable
@@ -56,7 +57,13 @@ class AddDdayActivity : AppCompatActivity() {
         }
 
         okButton.setOnClickListener {
-            Dday(name, "${year}-${month}-${dayOfMonth}").save()
+            val newOne = Dday(name, getString(R.string.date_string, year, month+1, dayOfMonth))
+            newOne.save()
+
+            val returnIntent = Intent()
+            returnIntent.putExtra("index", newOne.index)
+            setResult(RESULT_OK, returnIntent)
+            finish()
         }
     }
 
@@ -81,7 +88,7 @@ class AddDdayActivity : AppCompatActivity() {
         year = y
         month = m
         dayOfMonth = d
-        dateEditText.setText(getString(R.string.date_string, year, month + 1, dayOfMonth))
+        dateEditText.setText(getString(R.string.date_string_formatted, year, month + 1, dayOfMonth))
     }
 
     private fun initDefaultDate() {

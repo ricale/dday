@@ -22,10 +22,16 @@ class Dday(var name: String, var date: String) {
             return all.filterKeys {
                 it.contains(KEY_PREFIX) && !it.contains(LAST_INDEX)
             }.keys.map {
-                val splitted = it.split("-")
-                val index = splitted.get(1).toInt()
+                val splited = it.split("-")
+                val index = splited.get(1).toInt()
                 Dday(index)
-            }
+            }.sortedWith(Comparator { a, b ->
+                when {
+                    a.index > b.index -> 1
+                    a.index < b.index -> -1
+                    else -> 0
+                }
+            })
         }
 
         fun getIndex(): Int {
@@ -39,7 +45,7 @@ class Dday(var name: String, var date: String) {
         }
     }
 
-    private var index = 0
+    var index = 0
 
     constructor(index: Int, name: String, date: String): this(name, date) {
         this.index = index

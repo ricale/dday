@@ -2,5 +2,6 @@
     <string name="app_name">dday</string>
     <string name="action_settings">Settings</string>
 
-    <string name="date_string">%d년 %d월 %d일</string>
+    <string name="date_string_formatted">%d년 %d월 %d일</string>
+    <string name="date_string">%04d-%02d-%02d</string>
 </resources>

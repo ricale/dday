@@ -8,7 +8,8 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.dday.model.Dday
 
-class DdayListAdapter(context: Context, ddays: List<Dday>): ArrayAdapter<Dday>(context, 0, ddays) {
+class DdayListAdapter(context: Context, ddays: List<Dday>):
+    ArrayAdapter<Dday>(context, 0, ddays) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val itemView = convertView ?:

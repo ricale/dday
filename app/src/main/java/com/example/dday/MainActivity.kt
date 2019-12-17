@@ -8,25 +8,27 @@ import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dday.model.Dday
 import com.example.dday.utils.Storage
+import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     companion object {
-        val REQUEST_ADD_DDAY = 0
+        const val REQUEST_ADD_DDAY = 0
+        const val REQUEST_DDAY_DETAIL = 1
     }
 
-    lateinit var ddayListAdapter: DdayListAdapter
+    private lateinit var ddayListView: ListView
+    private lateinit var ddayListAdapter: DdayListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Storage.init(applicationContext)
+        AndroidThreeTen.init(this)
 
-        val ddays: ArrayList<Dday> = ArrayList(Dday.getAll())
+        ddayListView = findViewById(R.id.ddayList)
 
-        val ddayListView: ListView = findViewById(R.id.ddayList)
-        ddayListAdapter = DdayListAdapter(this, ddays)
-        ddayListView.adapter = ddayListAdapter
+        setDdayListView()
 
         fab.setOnClickListener { view ->
             val intent = Intent(this, AddDdayActivity::class.java)
@@ -61,6 +63,19 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun setDdayListView() {
+        val ddays: ArrayList<Dday> = ArrayList(Dday.getAll())
+
+        ddayListAdapter = DdayListAdapter(this, ddays)
+        ddayListView.adapter = ddayListAdapter
+        ddayListView.setOnItemClickListener { parent, view, position, id ->
+            val intent = Intent(this, DdayDetailActivity::class.java)
+            val selected = ddayListAdapter.getItem(position)
+            intent.putExtra("index", selected?.index)
+            startActivityForResult(intent, REQUEST_DDAY_DETAIL)
         }
     }
 }

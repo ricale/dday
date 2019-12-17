@@ -2,12 +2,15 @@ package com.example.dday.model
 
 import com.example.dday.utils.Storage
 import org.json.JSONObject
+import org.threeten.bp.LocalDate
 
 class Dday(var name: String, var date: String) {
     companion object {
         const val KEY_PREFIX = "dday"
         const val SEPARATOR = "-"
-        const val LAST_INDEX = "lastIndex"
+        const val LAST_INDEX_KEY = "lastIndex"
+
+        val DAYS_TO_ADDS: IntArray = intArrayOf(100, 200, 300, 400, 500, 600, 700, 800, 900, 1000)
 
         fun get(index: Int): Dday? {
             return try {
@@ -20,7 +23,7 @@ class Dday(var name: String, var date: String) {
         fun getAll(): List<Dday> {
             val all = Storage.getAll()
             return all.filterKeys {
-                it.contains(KEY_PREFIX) && !it.contains(LAST_INDEX)
+                it.contains(KEY_PREFIX) && !it.contains(LAST_INDEX_KEY)
             }.keys.map {
                 val splited = it.split("-")
                 val index = splited.get(1).toInt()
@@ -35,7 +38,7 @@ class Dday(var name: String, var date: String) {
         }
 
         fun getIndex(): Int {
-            val lastIndex = Storage.get("${KEY_PREFIX}${SEPARATOR}${LAST_INDEX}", 0)
+            val lastIndex = Storage.get("${KEY_PREFIX}${SEPARATOR}${LAST_INDEX_KEY}", 0)
             return if(lastIndex is Int) {
                 lastIndex + 1
             } else {
@@ -67,6 +70,15 @@ class Dday(var name: String, var date: String) {
         json.put("date", date)
 
         Storage.set("${KEY_PREFIX}${SEPARATOR}${index}", json)
-        Storage.set("${KEY_PREFIX}${SEPARATOR}${LAST_INDEX}", index)
+        Storage.set("${KEY_PREFIX}${SEPARATOR}${LAST_INDEX_KEY}", index)
+    }
+
+    fun getRemainings(): List<LocalDate> {
+        val split = date.split(SEPARATOR)
+        val localDate = LocalDate.of(split[0].toInt(), split[1].toInt() - 1, split[2].toInt())
+
+        return DAYS_TO_ADDS.map {
+            localDate.plusDays(it.toLong())
+        }
     }
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.dday.model.Dday
+import com.example.dday.utils.DateUtil
 
 class DdayListAdapter(context: Context, ddays: List<Dday>):
     ArrayAdapter<Dday>(context, 0, ddays) {
@@ -17,14 +18,14 @@ class DdayListAdapter(context: Context, ddays: List<Dday>):
                 .from(context)
                 .inflate(R.layout.listitem_dday, parent, false)
 
-        val tvIndex = itemView.findViewById<TextView>(R.id.ddayListItemIndex)
+        val tvDiff = itemView.findViewById<TextView>(R.id.ddayListItemDiff)
         val tvName = itemView.findViewById<TextView>(R.id.ddayListItemName)
         val tvDate = itemView.findViewById<TextView>(R.id.ddayListItemDate)
 
         val dday = getItem(position)
 
         if(dday != null) {
-            tvIndex.text = dday.index.toString()
+            tvDiff.text = DateUtil.getDiffSTring(dday.diffToday)
             tvName.text = dday.name
             tvDate.text = dday.date
         }

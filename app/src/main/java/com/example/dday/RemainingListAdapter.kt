@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import com.example.dday.utils.DateUtil
 import org.threeten.bp.LocalDate
-import org.threeten.bp.Period
 
 class RemainingListAdapter(context: Context, dates: List<LocalDate>):
     ArrayAdapter<LocalDate>(context, 0, dates) {
@@ -22,10 +22,24 @@ class RemainingListAdapter(context: Context, dates: List<LocalDate>):
         val tvCount = itemView.findViewById<TextView>(R.id.remainingCount)
 
         val date = getItem(position)
-        val period = Period.between(LocalDate.now(), date)
+        val period = if(date != null) {
+            DateUtil.getRemaingingDays(date)
+        } else {
+            0
+        }
 
-        tvDate.text = date?.toString()
-        tvCount.text = period.days.toString()
+        tvDate.text = if(date != null) {
+            context.getString(
+                R.string.date_string_formatted,
+                date.year,
+                date.monthValue,
+                date.dayOfMonth
+            )
+
+        } else {
+            ""
+        }
+        tvCount.text = DateUtil.getDiffSTring(period.toInt())
 
         return itemView
     }

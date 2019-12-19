@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.dday.model.Dday
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
-import java.util.*
+import org.threeten.bp.LocalDate
 
 class AddDdayActivity : AppCompatActivity() {
     private lateinit var nameEditText: TextInputEditText
@@ -25,9 +25,9 @@ class AddDdayActivity : AppCompatActivity() {
 
     lateinit var name: String
 
-    private var year: Int = -1
-    private var month: Int = -1
-    private var dayOfMonth: Int = -1
+    private var year = -1
+    private var month = -1
+    private var dayOfMonth = -1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +57,10 @@ class AddDdayActivity : AppCompatActivity() {
         }
 
         okButton.setOnClickListener {
-            val newOne = Dday(name, getString(R.string.date_string, year, month+1, dayOfMonth))
+            val newOne = Dday(
+                name,
+                getString(R.string.date_string, year, month, dayOfMonth)
+            )
             newOne.save()
 
             val returnIntent = Intent()
@@ -88,33 +91,39 @@ class AddDdayActivity : AppCompatActivity() {
         year = y
         month = m
         dayOfMonth = d
-        dateEditText.setText(getString(R.string.date_string_formatted, year, month + 1, dayOfMonth))
+        dateEditText.setText(
+            getString(
+                R.string.date_string_formatted,
+                year,
+                month,
+                dayOfMonth
+            )
+        )
     }
 
     private fun initDefaultDate() {
-        val cal: Calendar = Calendar.getInstance()
-        cal.time = Date()
+        val today = LocalDate.now()
 
         setDateText(
-            cal.get(Calendar.YEAR),
-            cal.get(Calendar.MONTH),
-            cal.get(Calendar.DAY_OF_MONTH)
+            today.year,
+            today.monthValue,
+            today.dayOfMonth
         )
     }
 
     private fun showCalendarDialog() {
-        val inflater: LayoutInflater = LayoutInflater.from(this)
+        val inflater = LayoutInflater.from(this)
         val view = inflater.inflate(R.layout.dialog_dday_date, null)
-        val picker: DatePicker = view.findViewById(R.id.ddayDatePicker)
+        val picker = view.findViewById<DatePicker>(R.id.ddayDatePicker)
 
-        picker.updateDate(year, month, dayOfMonth)
+        picker.updateDate(year, month - 1, dayOfMonth)
 
         MaterialAlertDialogBuilder(this)
             .setPositiveButton("OK", null)
             .setOnDismissListener {
                 setDateText(
                     picker.year,
-                    picker.month,
+                    picker.month + 1,
                     picker.dayOfMonth
                 )
             }

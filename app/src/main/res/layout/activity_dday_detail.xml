@@ -9,28 +9,51 @@
 
     <LinearLayout
         android:id="@+id/ddayDetailInfo"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent">
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
-            android:id="@+id/ddayDetailIndex"
-            android:layout_width="match_parent"
+            android:id="@+id/ddayDetailDiff"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Dday.Caption"
             />
+
 
         <TextView
             android:id="@+id/ddayDetailName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Dday.Detail.Name"
             />
 
         <TextView
-            android:id="@+id/ddayDetailDate"
+            android:id="@+id/ddayDetailYear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="end"
+            android:textAppearance="@style/TextAppearance.Dday.Detail.Date"
+            />
+
+        <TextView
+            android:id="@+id/ddayDetailMonth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:textAppearance="@style/TextAppearance.Dday.Detail.Date"
+            />
+
+        <TextView
+            android:id="@+id/ddayDetailDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:textAppearance="@style/TextAppearance.Dday.Detail.Date"
             />
 
     </LinearLayout>
@@ -40,8 +63,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/ddayDetailInfo"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -87,10 +87,15 @@
     <style name="TextAppearance.Dday.Overline" parent="TextAppearance.MaterialComponents.Overline">
     </style>
 
-    <style name="TextAppearance.Dday.Detail.Name" parent="TextAppearance.Dday.Headline3">
+    <style name="TextAppearance.Dday.Detail.Name" parent="TextAppearance.Dday.Headline4">
+    </style>
+    <style name="TextAppearance.Dday.Detail.Date" parent="TextAppearance.Dday.Body1">
+        <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="TextAppearance.Dday.Detail.Date" parent="TextAppearance.Dday.Body1">
+    <style name="TextAppearance.Dday.List.Name" parent="TextAppearance.Dday.Headline4">
+    </style>
+    <style name="TextAppearance.Dday.List.Date" parent="TextAppearance.Dday.Body1">
         <item name="android:textSize">20sp</item>
     </style>
 

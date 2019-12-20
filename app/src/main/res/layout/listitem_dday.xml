@@ -1,34 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:contentPadding="@dimen/margin">
+    android:layout_height="@dimen/dday_card_height"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dday_card_height"
-        android:gravity="bottom|end"
+        android:layout_height="match_parent"
+        app:contentPadding="@dimen/margin">
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ddayListItemInfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/margin"
+        android:elevation="2dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/ddayListItemDiff"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Dday.Caption"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/ddayListItemName" />
 
         <TextView
             android:id="@+id/ddayListItemName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.Dday.Headline4" />
+            android:textAppearance="@style/TextAppearance.Dday.List.Name"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/ddayListItemDay" />
 
         <TextView
-            android:id="@+id/ddayListItemDate"
+            android:id="@+id/ddayListItemYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.Dday.Body1" />
+            android:textAppearance="@style/TextAppearance.Dday.List.Date"
+            app:layout_constraintRight_toLeftOf="@id/ddayListItemSeparator1"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/ddayListItemSeparator1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Dday.List.Date"
+            android:text="-"
+            app:layout_constraintRight_toLeftOf="@id/ddayListItemMonth"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-</com.google.android.material.card.MaterialCardView>
+        <TextView
+            android:id="@+id/ddayListItemMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Dday.List.Date"
+            app:layout_constraintRight_toLeftOf="@id/ddayListItemSeparator2"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/ddayListItemSeparator2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Dday.List.Date"
+            android:text="-"
+            app:layout_constraintRight_toLeftOf="@id/ddayListItemDay"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/ddayListItemDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Dday.List.Date"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

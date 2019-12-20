@@ -4,8 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import com.example.dday.model.Dday
 import com.example.dday.utils.Storage
 import com.jakewharton.threetenabp.AndroidThreeTen
@@ -72,10 +76,27 @@ class MainActivity : AppCompatActivity() {
         ddayListAdapter = DdayListAdapter(this, ddays)
         ddayListView.adapter = ddayListAdapter
         ddayListView.setOnItemClickListener { parent, view, position, id ->
-            val intent = Intent(this, DdayDetailActivity::class.java)
             val selected = ddayListAdapter.getItem(position)
-            intent.putExtra("index", selected?.index)
-            startActivityForResult(intent, REQUEST_DDAY_DETAIL)
+            if(selected != null) {
+                goToDetailActivity(view, selected)
+            }
         }
+    }
+
+    private fun goToDetailActivity(view: View, selected: Dday) {
+        val intent = Intent(this, DdayDetailActivity::class.java)
+        intent.putExtra("index", selected.index)
+
+        val activityOptions: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            this,
+            Pair<View, String>(view, DdayDetailActivity.VIEW_NAME_CONTAINER),
+            Pair<View, String>(view.findViewById(R.id.ddayListItemDiff), DdayDetailActivity.VIEW_NAME_DIFF),
+            Pair<View, String>(view.findViewById(R.id.ddayListItemName), DdayDetailActivity.VIEW_NAME_NAME),
+            Pair<View, String>(view.findViewById(R.id.ddayListItemYear), DdayDetailActivity.VIEW_NAME_YEAR),
+            Pair<View, String>(view.findViewById(R.id.ddayListItemMonth), DdayDetailActivity.VIEW_NAME_MONTH),
+            Pair<View, String>(view.findViewById(R.id.ddayListItemDay), DdayDetailActivity.VIEW_NAME_DAY)
+        )
+
+        ActivityCompat.startActivityForResult(this, intent, REQUEST_DDAY_DETAIL, activityOptions.toBundle())
     }
 }

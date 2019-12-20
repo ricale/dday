@@ -20,14 +20,18 @@ class DdayListAdapter(context: Context, ddays: List<Dday>):
 
         val tvDiff = itemView.findViewById<TextView>(R.id.ddayListItemDiff)
         val tvName = itemView.findViewById<TextView>(R.id.ddayListItemName)
-        val tvDate = itemView.findViewById<TextView>(R.id.ddayListItemDate)
+        val tvYear = itemView.findViewById<TextView>(R.id.ddayListItemYear)
+        val tvMonth = itemView.findViewById<TextView>(R.id.ddayListItemMonth)
+        val tvDay = itemView.findViewById<TextView>(R.id.ddayListItemDay)
 
         val dday = getItem(position)
 
         if(dday != null) {
             tvDiff.text = DateUtil.getDiffSTring(dday.diffToday)
             tvName.text = dday.name
-            tvDate.text = dday.date
+            tvYear.text = dday.year.toString()
+            tvMonth.text = context.getString(R.string.date_string_month, dday.month)
+            tvDay.text = context.getString(R.string.date_string_day, dday.day)
         }
 
         return itemView

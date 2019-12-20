@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:divider="@null"
         android:dividerHeight="0dp"
+        android:scrollbarStyle="outsideOverlay"
         android:padding="@dimen/margin" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

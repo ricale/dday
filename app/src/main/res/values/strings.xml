@@ -4,4 +4,7 @@
 
     <string name="date_string_formatted">%d년 %d월 %d일</string>
     <string name="date_string">%04d-%02d-%02d</string>
+
+    <string name="date_string_month">%02d</string>
+    <string name="date_string_day">%02d</string>
 </resources>

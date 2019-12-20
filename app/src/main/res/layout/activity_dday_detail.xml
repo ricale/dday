@@ -7,21 +7,26 @@
     android:layout_height="match_parent"
     tools:context=".DdayDetailActivity">
 
-    <LinearLayout
-        android:id="@+id/ddayDetailInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/ddayDetailContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="2dp"
+        android:padding="@dimen/margin">
 
         <TextView
             android:id="@+id/ddayDetailDiff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.Dday.Caption"
+            app:layout_constraintRight_toRightOf="@id/ddayDetailName"
+            app:layout_constraintBottom_toTopOf="@id/ddayDetailName"
             />
 
 
@@ -30,43 +35,55 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.Dday.Detail.Name"
-            />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.66"
+            app:layout_constraintRight_toRightOf="@id/ddayDetailGuideline" />
 
         <TextView
             android:id="@+id/ddayDetailYear"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="end"
             android:textAppearance="@style/TextAppearance.Dday.Detail.Date"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ddayDetailName"
             />
 
         <TextView
             android:id="@+id/ddayDetailMonth"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="end"
             android:textAppearance="@style/TextAppearance.Dday.Detail.Date"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ddayDetailYear"
             />
 
         <TextView
             android:id="@+id/ddayDetailDay"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="end"
             android:textAppearance="@style/TextAppearance.Dday.Detail.Date"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ddayDetailMonth"
             />
 
-    </LinearLayout>
+        <ListView
+            android:id="@+id/ddayRemainings"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-    <ListView
-        android:id="@+id/ddayRemainings"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ddayDetailGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="0dp" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

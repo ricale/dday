@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
         <!-- Customize your theme here. -->
         <item name="colorAccent">@color/colorAccent</item>
 
@@ -88,12 +88,14 @@
     </style>
 
     <style name="TextAppearance.Dday.Detail.Name" parent="TextAppearance.Dday.Headline4">
+<!--        <item name="android:textSize">28sp</item>-->
     </style>
     <style name="TextAppearance.Dday.Detail.Date" parent="TextAppearance.Dday.Body1">
         <item name="android:textSize">20sp</item>
     </style>
 
     <style name="TextAppearance.Dday.List.Name" parent="TextAppearance.Dday.Headline4">
+<!--        <item name="android:textSize">28sp</item>-->
     </style>
     <style name="TextAppearance.Dday.List.Date" parent="TextAppearance.Dday.Body1">
         <item name="android:textSize">20sp</item>

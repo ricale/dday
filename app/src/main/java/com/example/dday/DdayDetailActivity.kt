@@ -9,7 +9,6 @@ import com.example.dday.model.Dday
 import com.example.dday.utils.DateUtil
 import com.google.android.material.card.MaterialCardView
 
-
 class DdayDetailActivity : AppCompatActivity() {
     companion object {
         const val VIEW_NAME_CONTAINER = "detail:container"

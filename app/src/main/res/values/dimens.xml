@@ -1,6 +1,6 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="margin">16dp</dimen>
-    <dimen name="dday_card_height">150dp</dimen>
+    <dimen name="dday_card_height">179dp</dimen>
     <dimen name="margin_typo">20dp</dimen>
 </resources>

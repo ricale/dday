@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.widget.ListView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
@@ -23,6 +25,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var ddayListView: ListView
     private lateinit var ddayListAdapter: DdayListAdapter
+    private lateinit var itemRemove: MenuItem
+    private var removable = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +44,29 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_main, menu)
+        itemRemove = menu.findItem(R.id.action_remove)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        return when (item.itemId) {
+            R.id.action_remove-> if(removable) {
+                finishRemovableMode()
+                true
+            } else {
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode == REQUEST_ADD_DDAY) {
             if(resultCode == RESULT_OK) {
@@ -54,22 +81,6 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     private fun setDdayListView() {
         val ddays: ArrayList<Dday> = ArrayList(Dday.getAll())
 
@@ -77,10 +88,26 @@ class MainActivity : AppCompatActivity() {
         ddayListView.adapter = ddayListAdapter
         ddayListView.setOnItemClickListener { parent, view, position, id ->
             val selected = ddayListAdapter.getItem(position)
-            if(selected != null) {
+            if(!removable && selected != null) {
                 goToDetailActivity(view, selected)
             }
         }
+        ddayListView.setOnItemLongClickListener { parent, view, position, id ->
+            setRemovableMode()
+            true
+        }
+    }
+
+    private fun setRemovableMode() {
+        removable = true
+        ddayListAdapter.setCheckableMode()
+        itemRemove.isVisible = true
+    }
+
+    private fun finishRemovableMode() {
+        removable = false
+        ddayListAdapter.finishCheckableMode()
+        itemRemove.isVisible = false
     }
 
     private fun goToDetailActivity(view: View, selected: Dday) {

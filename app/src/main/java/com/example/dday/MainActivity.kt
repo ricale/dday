@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.WindowManager
 import android.widget.ListView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
@@ -37,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         ddayListView = findViewById(R.id.ddayList)
 
         setDdayListView()
+
+        supportActionBar?.hide()
 
         fab.setOnClickListener { view ->
             val intent = Intent(this, AddDdayActivity::class.java)
@@ -99,13 +99,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setRemovableMode() {
+        supportActionBar?.show()
         removable = true
         ddayListAdapter.setCheckableMode()
         itemRemove.isVisible = true
     }
 
     private fun finishRemovableMode() {
+        supportActionBar?.hide()
         removable = false
+        ddayListAdapter.removeSelectedItems()
         ddayListAdapter.finishCheckableMode()
         itemRemove.isVisible = false
     }

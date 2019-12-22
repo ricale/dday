@@ -19,8 +19,14 @@
 
             </intent-filter>
         </activity>
-        <activity android:name=".DdayDetailActivity" />
-        <activity android:name=".AddDdayActivity" />
+        <activity
+            android:name=".DdayDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity
+            android:name=".AddDdayActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
     </application>
 
 </manifest>

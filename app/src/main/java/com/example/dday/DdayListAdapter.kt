@@ -31,7 +31,7 @@ class DdayListAdapter(context: Context, ddays: List<Dday>):
 
         val dday = getItem(position)
 
-        setCheckbox(checkbox, position)
+        initCheckbox(checkbox, position)
 
         if(dday != null) {
             tvDiff.text = DateUtil.getDiffSTring(dday.diffToday)
@@ -42,6 +42,25 @@ class DdayListAdapter(context: Context, ddays: List<Dday>):
         }
 
         return itemView
+    }
+
+    private fun initCheckbox(checkbox: MaterialCheckBox, position: Int) {
+        checkbox.visibility = if(checkable) View.VISIBLE else View.GONE
+        if(!checkable) {
+            checkbox.isChecked = false
+        }
+        checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
+            val contains = checkedIndices.contains(position)
+            if(isChecked) {
+                if(!contains) {
+                    checkedIndices.add(position)
+                }
+            } else {
+                if(contains) {
+                    checkedIndices.remove(position)
+                }
+            }
+        }
     }
 
     fun setCheckableMode() {
@@ -55,19 +74,17 @@ class DdayListAdapter(context: Context, ddays: List<Dday>):
         notifyDataSetChanged()
     }
 
-    private fun setCheckbox(checkbox: MaterialCheckBox, position: Int) {
-        checkbox.visibility = if(checkable) View.VISIBLE else View.GONE
-        checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
-            val contains = checkedIndices.contains(position)
-            if(isChecked) {
-                if(!contains) {
-                    checkedIndices.add(position)
-                }
-            } else {
-                if(contains) {
-                    checkedIndices.remove(position)
-                }
+    fun removeSelectedItems() {
+        checkedIndices.sortedWith(Comparator { a, b ->
+            when {
+                a < b -> 1
+                a > b -> -1
+                else -> 0
             }
+        }).forEach {
+            val dday = getItem(it)
+            dday?.remove()
+            remove(dday)
         }
     }
 }

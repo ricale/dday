@@ -3,7 +3,6 @@ package com.example.dday.utils
 import android.content.Context
 import android.content.SharedPreferences
 import org.json.JSONObject
-import java.lang.Exception
 
 object Storage {
     private lateinit var sharedPref: SharedPreferences
@@ -15,20 +14,26 @@ object Storage {
     }
 
     fun set(key: String, value: Int) {
-        val editor: SharedPreferences.Editor = sharedPref.edit()
+        val editor = sharedPref.edit()
         editor.putInt(key, value)
         editor.apply()
     }
 
     fun set(key: String, value: String) {
-        val editor: SharedPreferences.Editor = sharedPref.edit()
+        val editor = sharedPref.edit()
         editor.putString(key, value)
         editor.apply()
     }
 
     fun set(key: String, value: JSONObject) {
-        val editor: SharedPreferences.Editor = sharedPref.edit()
+        val editor = sharedPref.edit()
         editor.putString(key, value.toString())
+        editor.apply()
+    }
+
+    fun remove(key: String) {
+        val editor = sharedPref.edit()
+        editor.remove(key)
         editor.apply()
     }
 
@@ -48,7 +53,7 @@ object Storage {
         val jsonString: String? = Storage.sharedPref.getString(key, null)
 
         return try {
-            JSONObject(jsonString)
+            JSONObject(jsonString ?: "")
         } catch (e: Exception) {
             null
         }

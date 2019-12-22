@@ -87,6 +87,10 @@ class Dday(var name: String, var date: String) {
         Storage.set("${KEY_PREFIX}${SEPARATOR}${LAST_INDEX_KEY}", index)
     }
 
+    fun remove() {
+        Storage.remove("${KEY_PREFIX}${SEPARATOR}${index}")
+    }
+
     fun getRemainings(): List<LocalDate> {
         val split = date.split(SEPARATOR)
         val localDate = LocalDate.of(split[0].toInt(), split[1].toInt(), split[2].toInt())

@@ -1,11 +1,12 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
         <!-- Customize your theme here. -->
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 <!--        <item name="colorPrimaryVariant">@color/colorPrimary</item>-->
         <item name="colorOnPrimary">@color/colorOnPrimary</item>
 
@@ -14,8 +15,6 @@
 
         <item name="colorSurface">@color/colorSurface</item>
         <item name="colorOnSurface">@color/colorOnSurface</item>
-
-
 
         <item name="textAppearanceHeadline1">@style/TextAppearance.Dday.Headline1</item>
         <item name="textAppearanceHeadline2">@style/TextAppearance.Dday.Headline2</item>
@@ -32,6 +31,11 @@
         <item name="textAppearanceOverline">@style/TextAppearance.Dday.Overline</item>
 
         <item name="materialCardViewStyle">@style/Widget.Dday.CardView</item>
+
+        <item name="actionBarStyle">@style/Dday.ActionBar</item>
+        <item name="toolbarStyle">@style/Dday.ToolBar</item>
+        <item name="elevationOverlayEnabled">true</item>
+<!--        <item name="elevationOverlayColor">@color/colorSurface</item>-->
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -39,53 +43,36 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+<!--    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->
+<!--    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Dday.ActionBar" parent="Widget.MaterialComponents.ActionBar.Solid">
+        <item name="background">@color/colorSurface</item>
+    </style>
+
+    <style name="Dday.ToolBar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="elevationOverlayEnabled">true</item>
+        <item name="titleTextColor">@color/colorOnSurface</item>
+    </style>
 
     <style name="Widget.Dday.CardView" parent="Widget.MaterialComponents.CardView">
         <item name="cardCornerRadius">0dp</item>
         <item name="cardUseCompatPadding">true</item>
     </style>
 
-    <style name="TextAppearance.Dday.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
-    </style>
-
-    <style name="TextAppearance.Dday.Headline2" parent="TextAppearance.MaterialComponents.Headline2">
-    </style>
-
-    <style name="TextAppearance.Dday.Headline3" parent="TextAppearance.MaterialComponents.Headline3">
-    </style>
-
-    <style name="TextAppearance.Dday.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
-    </style>
-
-    <style name="TextAppearance.Dday.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
-    </style>
-
-    <style name="TextAppearance.Dday.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
-    </style>
-
-    <style name="TextAppearance.Dday.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
-    </style>
-
-    <style name="TextAppearance.Dday.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
-    </style>
-
-    <style name="TextAppearance.Dday.Body1" parent="TextAppearance.MaterialComponents.Body1">
-    </style>
-
-    <style name="TextAppearance.Dday.Body2" parent="TextAppearance.MaterialComponents.Body2">
-    </style>
-
-    <style name="TextAppearance.Dday.Caption" parent="TextAppearance.MaterialComponents.Caption">
-    </style>
-
-    <style name="TextAppearance.Dday.Button" parent="TextAppearance.MaterialComponents.Button">
-    </style>
-
-    <style name="TextAppearance.Dday.Overline" parent="TextAppearance.MaterialComponents.Overline">
-    </style>
+    <style name="TextAppearance.Dday.Headline1" parent="TextAppearance.MaterialComponents.Headline1" />
+    <style name="TextAppearance.Dday.Headline2" parent="TextAppearance.MaterialComponents.Headline2" />
+    <style name="TextAppearance.Dday.Headline3" parent="TextAppearance.MaterialComponents.Headline3" />
+    <style name="TextAppearance.Dday.Headline4" parent="TextAppearance.MaterialComponents.Headline4" />
+    <style name="TextAppearance.Dday.Headline5" parent="TextAppearance.MaterialComponents.Headline5" />
+    <style name="TextAppearance.Dday.Headline6" parent="TextAppearance.MaterialComponents.Headline6" />
+    <style name="TextAppearance.Dday.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1" />
+    <style name="TextAppearance.Dday.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2" />
+    <style name="TextAppearance.Dday.Body1" parent="TextAppearance.MaterialComponents.Body1" />
+    <style name="TextAppearance.Dday.Body2" parent="TextAppearance.MaterialComponents.Body2" />
+    <style name="TextAppearance.Dday.Caption" parent="TextAppearance.MaterialComponents.Caption" />
+    <style name="TextAppearance.Dday.Button" parent="TextAppearance.MaterialComponents.Button" />
+    <style name="TextAppearance.Dday.Overline" parent="TextAppearance.MaterialComponents.Overline" />
 
     <style name="TextAppearance.Dday.Detail.Name" parent="TextAppearance.Dday.Headline4">
 <!--        <item name="android:textSize">28sp</item>-->

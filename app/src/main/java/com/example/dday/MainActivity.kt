@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
@@ -23,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var ddayListView: ListView
     private lateinit var ddayListAdapter: DdayListAdapter
-    private lateinit var itemRemove: MenuItem
+    private lateinit var appToolbar: Toolbar
     private var removable = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,31 +35,28 @@ class MainActivity : AppCompatActivity() {
         AndroidThreeTen.init(this)
 
         ddayListView = findViewById(R.id.ddayList)
+        appToolbar= findViewById(R.id.toolbar)
 
         setDdayListView()
 
-        supportActionBar?.hide()
+        setSupportActionBar(appToolbar)
 
         fab.setOnClickListener { view ->
             val intent = Intent(this, AddDdayActivity::class.java)
+            doneRemovable()
             startActivityForResult(intent, REQUEST_ADD_DDAY)
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
-        itemRemove = menu.findItem(R.id.action_remove)
-        return true
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_remove-> if(removable) {
-                finishRemovableMode()
+            R.id.action_remove -> if(removable) {
+                doneRemovable()
                 true
             } else {
                 true
@@ -66,6 +65,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        if(removable) {
+            doneRemovable(doRemove = false)
+        } else {
+            super.onBackPressed()
+        }
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode == REQUEST_ADD_DDAY) {
@@ -93,24 +99,26 @@ class MainActivity : AppCompatActivity() {
             }
         }
         ddayListView.setOnItemLongClickListener { parent, view, position, id ->
-            setRemovableMode()
+            setRemovable()
             true
         }
     }
 
-    private fun setRemovableMode() {
-        supportActionBar?.show()
+    private fun setRemovable() {
         removable = true
         ddayListAdapter.setCheckableMode()
-        itemRemove.isVisible = true
+
+        setToolbarVisibility(View.VISIBLE)
     }
 
-    private fun finishRemovableMode() {
-        supportActionBar?.hide()
+    private fun doneRemovable(doRemove: Boolean = true) {
         removable = false
-        ddayListAdapter.removeSelectedItems()
+        if(doRemove) {
+            ddayListAdapter.removeSelectedItems()
+        }
         ddayListAdapter.finishCheckableMode()
-        itemRemove.isVisible = false
+
+        setToolbarVisibility(View.GONE)
     }
 
     private fun goToDetailActivity(view: View, selected: Dday) {
@@ -127,6 +135,20 @@ class MainActivity : AppCompatActivity() {
             Pair<View, String>(view.findViewById(R.id.ddayListItemDay), DdayDetailActivity.VIEW_NAME_DAY)
         )
 
+        doneRemovable()
         ActivityCompat.startActivityForResult(this, intent, REQUEST_DDAY_DETAIL, activityOptions.toBundle())
+    }
+
+    private fun setToolbarVisibility(visibility: Int) {
+        appToolbar.visibility = visibility
+        val params = ddayListView.layoutParams as ViewGroup.MarginLayoutParams
+        params.setMargins(
+            params.leftMargin,
+            if(visibility != View.GONE) resources.getDimensionPixelSize(R.dimen.toolbar_height) else params.bottomMargin,
+            params.rightMargin,
+            params.bottomMargin
+
+        )
+        ddayListView.layoutParams = params
     }
 }

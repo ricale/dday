@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dday_card_height"
     android:orientation="vertical">
@@ -38,6 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.Dday.Caption"
+            android:textColor="@color/colorOnSurface"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toTopOf="@id/ddayListItemName" />
 
@@ -46,6 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.Dday.List.Name"
+            android:textColor="@color/colorOnSurface"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toTopOf="@id/ddayListItemDay" />
 
@@ -54,6 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.Dday.List.Date"
+            android:textColor="@color/colorOnSurface"
             app:layout_constraintRight_toLeftOf="@id/ddayListItemSeparator1"
             app:layout_constraintBottom_toBottomOf="parent" />
 
@@ -62,6 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.Dday.List.Date"
+            android:textColor="@color/colorOnSurface"
             android:text="-"
             app:layout_constraintRight_toLeftOf="@id/ddayListItemMonth"
             app:layout_constraintBottom_toBottomOf="parent" />
@@ -71,6 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.Dday.List.Date"
+            android:textColor="@color/colorOnSurface"
             app:layout_constraintRight_toLeftOf="@id/ddayListItemSeparator2"
             app:layout_constraintBottom_toBottomOf="parent" />
 
@@ -79,6 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.Dday.List.Date"
+            android:textColor="@color/colorOnSurface"
             android:text="-"
             app:layout_constraintRight_toLeftOf="@id/ddayListItemDay"
             app:layout_constraintBottom_toBottomOf="parent" />
@@ -88,6 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.Dday.List.Date"
+            android:textColor="@color/colorOnSurface"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 

@@ -1,20 +1,18 @@
 package com.example.dday
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
-import android.widget.DatePicker
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dday.model.Dday
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import org.threeten.bp.LocalDate
 
@@ -112,22 +110,8 @@ class AddDdayActivity : AppCompatActivity() {
     }
 
     private fun showCalendarDialog() {
-        val inflater = LayoutInflater.from(this)
-        val view = inflater.inflate(R.layout.dialog_dday_date, null)
-        val picker = view.findViewById<DatePicker>(R.id.ddayDatePicker)
-
-        picker.updateDate(year, month - 1, dayOfMonth)
-
-        MaterialAlertDialogBuilder(this)
-            .setPositiveButton("OK", null)
-            .setOnDismissListener {
-                setDateText(
-                    picker.year,
-                    picker.month + 1,
-                    picker.dayOfMonth
-                )
-            }
-            .setView(view)
-            .show()
+        DatePickerDialog(this, DatePickerDialog.OnDateSetListener {_, y, m, d ->
+            setDateText(y, m + 1, d)
+        }, year, month - 1, dayOfMonth).show()
     }
 }

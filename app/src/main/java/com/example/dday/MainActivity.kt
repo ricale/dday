@@ -15,7 +15,7 @@ import androidx.core.util.Pair
 import com.example.dday.model.Dday
 import com.example.dday.utils.Storage
 import com.jakewharton.threetenabp.AndroidThreeTen
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.fab
 
 class MainActivity : AppCompatActivity() {
     companion object {

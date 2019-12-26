@@ -35,7 +35,10 @@
         <item name="actionBarStyle">@style/Dday.ActionBar</item>
         <item name="toolbarStyle">@style/Dday.ToolBar</item>
         <item name="elevationOverlayEnabled">true</item>
-<!--        <item name="elevationOverlayColor">@color/colorSurface</item>-->
+
+        <item name="android:datePickerDialogTheme">@style/MyDatePickerDialogTheme</item>
+
+        <item name="materialButtonStyle">@style/Widget.Dday.Button</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -58,6 +61,12 @@
     <style name="Widget.Dday.CardView" parent="Widget.MaterialComponents.CardView">
         <item name="cardCornerRadius">0dp</item>
         <item name="cardUseCompatPadding">true</item>
+    </style>
+
+    <style name="Widget.Dday.Button" parent="Widget.MaterialComponents.Button">
+<!--        <item name="android:insetTop">0dp</item>-->
+<!--        <item name="android:insetBottom">0dp</item>-->
+        <item name="cornerRadius">0dp</item>
     </style>
 
     <style name="TextAppearance.Dday.Headline1" parent="TextAppearance.MaterialComponents.Headline1" />
@@ -86,6 +95,18 @@
     </style>
     <style name="TextAppearance.Dday.List.Date" parent="TextAppearance.Dday.Body1">
         <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Dialog">
+        <item name="android:colorAccent">#FFF</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/MyDatePickerDialogTheme.NegativeButtonStyle</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/MyDatePickerDialogTheme.PositiveButtonStyle</item>
+    </style>
+    <style name="MyDatePickerDialogTheme.NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+
+    </style>
+    <style name="MyDatePickerDialogTheme.PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+
     </style>
 
 </resources>

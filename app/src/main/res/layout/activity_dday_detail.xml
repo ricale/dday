@@ -7,11 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".DdayDetailActivity">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/ddayDetailGuideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="1" />
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/ddayDetailContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorSurface">
+        android:padding="0dp"
+        app:cardElevation="0dp">
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -30,7 +38,6 @@
             app:layout_constraintRight_toRightOf="@id/ddayDetailName"
             app:layout_constraintBottom_toTopOf="@id/ddayDetailName"
             />
-
 
         <TextView
             android:id="@+id/ddayDetailName"
@@ -73,16 +80,6 @@
             app:layout_constraintTop_toBottomOf="@id/ddayDetailMonth"
             />
 
-        <ListView
-            android:id="@+id/ddayRemainings"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            android:visibility="gone"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/ddayDetailGuideline"
             android:layout_width="wrap_content"
@@ -91,5 +88,30 @@
             app:layout_constraintGuide_end="0dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/ddayDetailRemainingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin"
+        android:elevation="3dp"
+        android:src="@drawable/ic_view_list_white_24dp"
+        android:tint="#999"
+        android:background="@android:color/transparent"
+        android:visibility="gone"
+        android:contentDescription="remaining list button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/ddayDetailGuideline2" />
+
+    <ListView
+        android:id="@+id/ddayRemainings"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:background="#99212121"
+        android:elevation="3dp"
+        app:layout_constraintTop_toBottomOf="@id/ddayDetailRemainingButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

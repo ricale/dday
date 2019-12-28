@@ -34,7 +34,7 @@ class DdayListAdapter(context: Context, ddays: List<Dday>):
         initCheckbox(checkbox, position)
 
         if(dday != null) {
-            tvDiff.text = DateUtil.getDiffSTring(dday.diffToday)
+            tvDiff.text = DateUtil.getDiffString(dday.diffToday)
             tvName.text = dday.name
             tvYear.text = dday.year.toString()
             tvMonth.text = context.getString(R.string.date_string_month, dday.month)

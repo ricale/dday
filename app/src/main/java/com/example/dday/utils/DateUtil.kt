@@ -11,7 +11,7 @@ object DateUtil {
         )
     }
 
-    fun getDiffSTring(diff: Int): String {
+    fun getDiffString(diff: Int): String {
         return if(diff < 0) {
             "D-%d".format(diff*-1)
         } else {

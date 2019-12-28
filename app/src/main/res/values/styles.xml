@@ -84,17 +84,22 @@
     <style name="TextAppearance.Dday.Overline" parent="TextAppearance.MaterialComponents.Overline" />
 
     <style name="TextAppearance.Dday.Detail.Name" parent="TextAppearance.Dday.Headline4">
-<!--        <item name="android:textSize">28sp</item>-->
     </style>
     <style name="TextAppearance.Dday.Detail.Date" parent="TextAppearance.Dday.Body1">
         <item name="android:textSize">20sp</item>
     </style>
 
     <style name="TextAppearance.Dday.List.Name" parent="TextAppearance.Dday.Headline4">
-<!--        <item name="android:textSize">28sp</item>-->
     </style>
     <style name="TextAppearance.Dday.List.Date" parent="TextAppearance.Dday.Body1">
         <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TextAppearance.Dday.Remaining.Name" parent="TextAppearance.Dday.Body1">
+    </style>
+    <style name="TextAppearance.Dday.Remaining.Date" parent="TextAppearance.Dday.Body1">
+    </style>
+    <style name="TextAppearance.Dday.Remaining.Count" parent="TextAppearance.Dday.Body1">
     </style>
 
     <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Dialog">

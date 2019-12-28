@@ -1,18 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/padding_small_component">
+
+    <TextView
+        android:id="@+id/remainingName"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin"
+        android:textAppearance="@style/TextAppearance.Dday.Remaining.Name"
+        android:textAlignment="textEnd"
+        android:textColor="@color/colorOnSurface"
+        tools:text="1001일" />
 
     <TextView
         android:id="@+id/remainingDate"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin"
+        android:textAppearance="@style/TextAppearance.Dday.Remaining.Date"
+        android:textColor="@color/colorOnSurface"
+        tools:text="2019-01-01" />
 
     <TextView
         android:id="@+id/remainingCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.Dday.Remaining.Count"
+        android:textAlignment="textEnd"
+        android:textColor="@color/colorOnSurface"
+        tools:text="D+2001" />
 
 </LinearLayout>

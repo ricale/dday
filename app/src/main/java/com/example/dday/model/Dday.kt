@@ -11,7 +11,15 @@ class Dday(var name: String, var date: String) {
         const val SEPARATOR = "-"
         const val LAST_INDEX_KEY = "lastIndex"
 
-        val DAYS_TO_ADDS: IntArray = intArrayOf(100, 200, 300, 400, 500, 600, 700, 800, 900, 1000)
+        val DAYS_TO_ADDS: IntArray = intArrayOf(
+            100, 200, 300, 400, 500,
+            600, 700, 800, 900, 1000,
+            1111, 1500, 2000
+        )
+
+        val YEARS_TO_ADDS: IntArray = intArrayOf(
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+        )
 
         fun get(index: Int): Dday? {
             return try {
@@ -91,12 +99,24 @@ class Dday(var name: String, var date: String) {
         Storage.remove("${KEY_PREFIX}${SEPARATOR}${index}")
     }
 
-    fun getRemainings(): List<LocalDate> {
+    fun getRemainings(): List<Remaining> {
         val split = date.split(SEPARATOR)
         val localDate = LocalDate.of(split[0].toInt(), split[1].toInt(), split[2].toInt())
 
-        return DAYS_TO_ADDS.map {
-            localDate.plusDays(it.toLong() - 1)
+        val addedByDays = DAYS_TO_ADDS.map {
+            Remaining(
+                "${it}일",
+                localDate.plusDays(it.toLong() - 1)
+            )
         }
+        val addedByYears = YEARS_TO_ADDS.map {
+            Remaining(
+                "${it}년",
+                localDate.plusYears(it.toLong())
+            )
+        }
+        return (addedByDays + addedByYears).sortedWith(Comparator { a, b ->
+            a.date.compareTo(b.date)
+        })
     }
 }

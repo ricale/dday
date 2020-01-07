@@ -11,15 +11,9 @@ class Dday(var name: String, var date: String) {
         const val SEPARATOR = "-"
         const val LAST_INDEX_KEY = "lastIndex"
 
-        val DAYS_TO_ADDS: IntArray = intArrayOf(
-            100, 200, 300, 400, 500,
-            600, 700, 800, 900, 1000,
-            1111, 1500, 2000
-        )
+        val DAYS_TO_ADDS = IntArray(36) { (it + 1) * 100 }
 
-        val YEARS_TO_ADDS: IntArray = intArrayOf(
-            1, 2, 3, 4, 5, 6, 7, 8, 9, 10
-        )
+        val YEARS_TO_ADDS = IntArray(10) { it + 1 }
 
         fun get(index: Int): Dday? {
             return try {

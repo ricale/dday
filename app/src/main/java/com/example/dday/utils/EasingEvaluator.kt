@@ -15,7 +15,7 @@ class EasingEvaluator(val duration: Float): TypeEvaluator<Number> {
         )
     }
 
-    fun calculate(tOrig: Float, b: Float, c: Float, d: Float): Float{
+    private fun calculate(tOrig: Float, b: Float, c: Float, d: Float): Float{
         val t = tOrig / d
         return c * t * t + b;
     }

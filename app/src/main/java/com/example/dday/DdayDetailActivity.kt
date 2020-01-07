@@ -1,20 +1,20 @@
 package com.example.dday
 
 import android.animation.AnimatorSet
-import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageButton
-import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Guideline
 import androidx.core.view.ViewCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.dday.model.Dday
+import com.example.dday.utils.AnimatorFactory
 import com.example.dday.utils.DateUtil
-import com.example.dday.utils.EasingEvaluator
 
 class DdayDetailActivity : AppCompatActivity() {
     companion object {
@@ -27,6 +27,9 @@ class DdayDetailActivity : AppCompatActivity() {
 
         const val SWIPE_ANIM_DURATION = 500L
         const val MIN_DISTANCE_SWIPE = 100
+
+        private val SWIPE_ANIM_TOP_RATE = 0.0f
+        private val SWIPE_ANIM_BOTTOM_RATE = 1.0f
     }
 
     private lateinit var ctLayout: FrameLayout
@@ -36,8 +39,11 @@ class DdayDetailActivity : AppCompatActivity() {
     private lateinit var tvMonth: TextView
     private lateinit var tvDay: TextView
     private lateinit var btnRemainings: ImageButton
-    private lateinit var lvRemainings: ListView
+    private lateinit var rvRemainings: RecyclerView
     private lateinit var guideline: Guideline
+
+    private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
 
     private lateinit var dday: Dday
 
@@ -59,7 +65,7 @@ class DdayDetailActivity : AppCompatActivity() {
         tvMonth = findViewById(R.id.ddayDetailMonth)
         tvDay = findViewById(R.id.ddayDetailDay)
         btnRemainings = findViewById(R.id.ddayDetailRemainingButton)
-        lvRemainings = findViewById(R.id.ddayRemainings)
+        rvRemainings = findViewById(R.id.ddayRemainings)
         guideline = findViewById(R.id.ddayDetailGuideline2)
 
         dday = Dday.get(
@@ -134,27 +140,30 @@ class DdayDetailActivity : AppCompatActivity() {
     }
 
     private fun setRemainings() {
-        lvRemainings.adapter = RemainingListAdapter(this, dday.getRemainings())
+        viewManager = LinearLayoutManager(this)
+        viewAdapter = RemainingRecyclerAdapter(dday.getRemainings().toTypedArray())
+
+        rvRemainings.layoutManager = viewManager
+        rvRemainings.adapter = viewAdapter
+
         btnRemainings.setOnClickListener {
             showRemainings()
         }
 
-        startAnimatorSet = AnimatorSet()
-        val valueAnimator1 = ValueAnimator.ofFloat(1f, 0f)
-        valueAnimator1.setEvaluator(EasingEvaluator(SWIPE_ANIM_DURATION.toFloat()))
-        valueAnimator1.addUpdateListener {
+        startAnimatorSet = AnimatorFactory.create(
+            SWIPE_ANIM_BOTTOM_RATE,
+            SWIPE_ANIM_TOP_RATE,
+            SWIPE_ANIM_DURATION
+        ) {
             guideline.setGuidelinePercent(it.animatedValue as Float)
         }
-        startAnimatorSet.playTogether(valueAnimator1)
-        startAnimatorSet.duration = SWIPE_ANIM_DURATION
 
-        endAnimatorSet = AnimatorSet()
-        val valueAnimator = ValueAnimator.ofFloat(0f, 1f)
-        valueAnimator.setEvaluator(EasingEvaluator(SWIPE_ANIM_DURATION.toFloat()))
-        valueAnimator.addUpdateListener {
+        endAnimatorSet = AnimatorFactory.create(
+            SWIPE_ANIM_TOP_RATE,
+            SWIPE_ANIM_BOTTOM_RATE,
+            SWIPE_ANIM_DURATION
+        ) {
             guideline.setGuidelinePercent(it.animatedValue as Float)
         }
-        endAnimatorSet.playTogether(valueAnimator)
-        endAnimatorSet.duration = SWIPE_ANIM_DURATION
     }
 }

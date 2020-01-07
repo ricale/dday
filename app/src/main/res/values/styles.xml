@@ -7,6 +7,7 @@
 
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
 <!--        <item name="colorPrimaryVariant">@color/colorPrimary</item>-->
         <item name="colorOnPrimary">@color/colorOnPrimary</item>
 
@@ -95,9 +96,9 @@
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="TextAppearance.Dday.Remaining.Name" parent="TextAppearance.Dday.Body1">
+    <style name="TextAppearance.Dday.Remaining.Name" parent="TextAppearance.Dday.Headline5">
     </style>
-    <style name="TextAppearance.Dday.Remaining.Date" parent="TextAppearance.Dday.Body1">
+    <style name="TextAppearance.Dday.Remaining.Date" parent="TextAppearance.Dday.Caption">
     </style>
     <style name="TextAppearance.Dday.Remaining.Count" parent="TextAppearance.Dday.Body1">
     </style>

@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_remove -> if(removable) {
-                doneRemovable()
+                doneRemovable(doRemove = true)
                 true
             } else {
                 true
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if(removable) {
-            doneRemovable(doRemove = false)
+            doneRemovable()
         } else {
             super.onBackPressed()
         }
@@ -105,13 +105,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setRemovable() {
+        if(removable) {
+            return
+        }
+
         removable = true
         ddayListAdapter.setCheckableMode()
 
         setToolbarVisibility(View.VISIBLE)
     }
 
-    private fun doneRemovable(doRemove: Boolean = true) {
+    private fun doneRemovable(doRemove: Boolean = false) {
+        if(!removable) {
+            return
+        }
+
         removable = false
         if(doRemove) {
             ddayListAdapter.removeSelectedItems()

@@ -8,8 +8,14 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:contentPadding="@dimen/margin">
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ddayListItemImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            />
 
     </com.google.android.material.card.MaterialCardView>
 

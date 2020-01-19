@@ -6,6 +6,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Guideline
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dday.model.Dday
 import com.example.dday.utils.AnimatorFactory
 import com.example.dday.utils.DateUtil
+import com.example.dday.utils.ImageUtil
 
 class DdayDetailActivity : AppCompatActivity() {
     companion object {
@@ -33,6 +35,7 @@ class DdayDetailActivity : AppCompatActivity() {
     }
 
     private lateinit var ctLayout: FrameLayout
+    private lateinit var ivBackgroud: ImageView
     private lateinit var tvDiff: TextView
     private lateinit var tvName: TextView
     private lateinit var tvYear: TextView
@@ -59,6 +62,7 @@ class DdayDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_dday_detail)
 
         ctLayout = findViewById(R.id.ddayDetailContainer)
+        ivBackgroud = findViewById(R.id.ddayDetailImage)
         tvDiff = findViewById(R.id.ddayDetailDiff)
         tvName = findViewById(R.id.ddayDetailName)
         tvYear = findViewById(R.id.ddayDetailYear)
@@ -126,6 +130,11 @@ class DdayDetailActivity : AppCompatActivity() {
         tvYear.text = dday.year.toString()
         tvMonth.text = getString(R.string.date_string_month, dday.month)
         tvDay.text = getString(R.string.date_string_day, dday.day)
+
+        val bitmap = ImageUtil.getDdayThumbnail(applicationContext, dday)
+        if(bitmap != null) {
+            ivBackgroud.setImageBitmap(bitmap)
+        }
     }
 
 

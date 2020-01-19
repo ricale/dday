@@ -2,7 +2,9 @@ package com.example.dday
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Rect
 import android.os.Bundle
@@ -18,7 +20,9 @@ import com.example.dday.model.Dday
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import org.threeten.bp.LocalDate
+import java.io.File
 import java.io.FileNotFoundException
+import java.io.FileOutputStream
 
 class AddDdayActivity : AppCompatActivity() {
     companion object {
@@ -29,6 +33,8 @@ class AddDdayActivity : AppCompatActivity() {
     private lateinit var nameEditText: TextInputEditText
     private lateinit var dateEditText: TextInputEditText
     private lateinit var okButton: Button
+
+    private lateinit var image: Bitmap
 
     lateinit var name: String
 
@@ -58,8 +64,8 @@ class AddDdayActivity : AppCompatActivity() {
                     try {
                         val imageUri = data.data
                         val imageStream = contentResolver.openInputStream(imageUri!!)
-                        val selectedImage = BitmapFactory.decodeStream(imageStream)
-                        imageView.setImageBitmap(selectedImage)
+                        image = BitmapFactory.decodeStream(imageStream)
+                        imageView.setImageBitmap(image)
                     } catch (e: FileNotFoundException) {
                         e.printStackTrace()
                     }
@@ -139,12 +145,26 @@ class AddDdayActivity : AppCompatActivity() {
                 getString(R.string.date_string, year, month, dayOfMonth)
             )
             newOne.save()
+            saveImage(newOne.index)
 
             val returnIntent = Intent()
             returnIntent.putExtra("index", newOne.index)
             setResult(RESULT_OK, returnIntent)
             finish()
         }
+    }
+
+    private fun saveImage(index: Int) {
+        val cw = ContextWrapper(applicationContext)
+        val directory = cw.getDir("thumbnail", Context.MODE_PRIVATE)
+        if(!directory.exists()) {
+            directory.mkdir()
+        }
+        val path = File(directory, "thumbnail${index}.png")
+
+        val fos = FileOutputStream(path)
+        image.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        fos.close()
     }
 
     private fun showCalendarDialog() {

@@ -7,4 +7,13 @@
 
     <string name="date_string_month">%02d</string>
     <string name="date_string_day">%02d</string>
+    <string name="date_string_separator">-</string>
+
+    <string name="hint_dday_name">기념일 이름</string>
+    <string name="hint_dday_date">날짜</string>
+
+    <string name="label_button_ok">확인</string>
+
+    <string name="image_desc_thumbnail">dday thumbnail</string>
+    <string name="image_desc_remaining_list_btn">remaining list button</string>
 </resources>

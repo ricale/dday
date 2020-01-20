@@ -14,4 +14,6 @@
     <color name="colorOnSurfaceInactive">#77FFFFFF</color>
 
     <color name="colorImageTint">#55000000</color>
+    <color name="colorImageBackground">#242424</color>
+    <color name="colorRemainingListBackground">#99212121</color>
 </resources>

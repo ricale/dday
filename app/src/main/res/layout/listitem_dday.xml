@@ -16,6 +16,7 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:tint="@color/colorImageTint"
+            android:contentDescription="@string/image_desc_thumbnail"
             />
 
     </com.google.android.material.card.MaterialCardView>
@@ -72,7 +73,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.Dday.List.Date"
             android:textColor="@color/colorOnSurface"
-            android:text="-"
+            android:text="@string/date_string_separator"
             app:layout_constraintRight_toLeftOf="@id/ddayListItemMonth"
             app:layout_constraintBottom_toBottomOf="parent" />
 
@@ -91,7 +92,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.Dday.List.Date"
             android:textColor="@color/colorOnSurface"
-            android:text="-"
+            android:text="@string/date_string_separator"
             app:layout_constraintRight_toLeftOf="@id/ddayListItemDay"
             app:layout_constraintBottom_toBottomOf="parent" />
 

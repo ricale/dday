@@ -120,12 +120,14 @@ class AddDdayActivity : AppCompatActivity() {
         imageButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
-            startActivityForResult(intent, REQUEST_GET_IMAGE);
+            startActivityForResult(intent, REQUEST_GET_IMAGE)
+            enableOkButtonIfNeeded()
         }
 
         nameEditText.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 name = s.toString()
+                enableOkButtonIfNeeded()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -154,6 +156,19 @@ class AddDdayActivity : AppCompatActivity() {
         }
     }
 
+    private fun enableOkButtonIfNeeded() {
+        okButton.isEnabled = (
+            this::name.isInitialized && !name.isBlank() &&
+            this::image.isInitialized
+        )
+    }
+
+    private fun showCalendarDialog() {
+        DatePickerDialog(this, DatePickerDialog.OnDateSetListener {_, y, m, d ->
+            setDateText(y, m + 1, d)
+        }, year, month - 1, dayOfMonth).show()
+    }
+
     private fun saveImage(index: Int) {
         val cw = ContextWrapper(applicationContext)
         val directory = cw.getDir("thumbnail", Context.MODE_PRIVATE)
@@ -165,11 +180,5 @@ class AddDdayActivity : AppCompatActivity() {
         val fos = FileOutputStream(path)
         image.compress(Bitmap.CompressFormat.PNG, 100, fos);
         fos.close()
-    }
-
-    private fun showCalendarDialog() {
-        DatePickerDialog(this, DatePickerDialog.OnDateSetListener {_, y, m, d ->
-            setDateText(y, m + 1, d)
-        }, year, month - 1, dayOfMonth).show()
     }
 }

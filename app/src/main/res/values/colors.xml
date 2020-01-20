@@ -12,4 +12,6 @@
     <color name="colorSurface">#121212</color>
     <color name="colorOnSurface">#FFFFFF</color>
     <color name="colorOnSurfaceInactive">#77FFFFFF</color>
+
+    <color name="colorImageTint">#55000000</color>
 </resources>

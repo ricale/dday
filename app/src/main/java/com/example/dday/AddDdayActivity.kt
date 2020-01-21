@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Rect
 import android.os.Bundle
 import android.text.Editable
@@ -17,6 +16,7 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dday.model.Dday
+import com.example.dday.utils.ImageUtil
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import org.threeten.bp.LocalDate
@@ -62,10 +62,9 @@ class AddDdayActivity : AppCompatActivity() {
             if(resultCode == RESULT_OK) {
                 if(data != null) {
                     try {
-                        val imageUri = data.data
-                        val imageStream = contentResolver.openInputStream(imageUri!!)
-                        image = BitmapFactory.decodeStream(imageStream)
+                        image = ImageUtil.getImageFromUri(contentResolver, data.data!!)
                         imageView.setImageBitmap(image)
+                        enableOkButtonIfNeeded()
                     } catch (e: FileNotFoundException) {
                         e.printStackTrace()
                     }
@@ -121,7 +120,6 @@ class AddDdayActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
             startActivityForResult(intent, REQUEST_GET_IMAGE)
-            enableOkButtonIfNeeded()
         }
 
         nameEditText.addTextChangedListener(object: TextWatcher {

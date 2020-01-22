@@ -2,6 +2,7 @@ package com.example.dday
 
 import android.animation.AnimatorSet
 import android.os.Bundle
+import android.transition.ChangeBounds
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
@@ -35,7 +36,7 @@ class DdayDetailActivity : AppCompatActivity() {
     }
 
     private lateinit var ctLayout: FrameLayout
-    private lateinit var ivBackgroud: ImageView
+    private lateinit var ivBackground: ImageView
     private lateinit var tvDiff: TextView
     private lateinit var tvName: TextView
     private lateinit var tvYear: TextView
@@ -62,7 +63,7 @@ class DdayDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_dday_detail)
 
         ctLayout = findViewById(R.id.ddayDetailContainer)
-        ivBackgroud = findViewById(R.id.ddayDetailImage)
+        ivBackground = findViewById(R.id.ddayDetailImage)
         tvDiff = findViewById(R.id.ddayDetailDiff)
         tvName = findViewById(R.id.ddayDetailName)
         tvYear = findViewById(R.id.ddayDetailYear)
@@ -118,10 +119,10 @@ class DdayDetailActivity : AppCompatActivity() {
         ViewCompat.setTransitionName(tvMonth, VIEW_NAME_MONTH)
         ViewCompat.setTransitionName(tvDay, VIEW_NAME_DAY)
 
-////        Scene Transition Animation Duration
-//        val bounds = ChangeBounds()
-//        bounds.setDuration(1000)
-//        window.sharedElementEnterTransition = bounds
+//        Scene Transition Animation Duration
+        val bounds = ChangeBounds()
+        bounds.duration = 200
+        window.sharedElementEnterTransition = bounds
     }
 
     private fun setDdayInfo() {
@@ -133,7 +134,7 @@ class DdayDetailActivity : AppCompatActivity() {
 
         val bitmap = ImageUtil.getDdayThumbnail(applicationContext, dday)
         if(bitmap != null) {
-            ivBackgroud.setImageBitmap(bitmap)
+            ivBackground.setImageBitmap(bitmap)
         }
     }
 

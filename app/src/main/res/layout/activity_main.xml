@@ -24,13 +24,10 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ddayList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        android:scrollbarStyle="outsideOverlay"
+        android:layout_height="match_parent"
         android:padding="@dimen/margin" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

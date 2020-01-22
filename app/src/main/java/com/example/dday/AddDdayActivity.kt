@@ -6,6 +6,7 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Rect
+import android.os.AsyncTask
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -17,6 +18,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dday.model.Dday
 import com.example.dday.utils.ImageUtil
+import com.example.dday.widget.LoadingIndicator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import org.threeten.bp.LocalDate
@@ -35,6 +37,7 @@ class AddDdayActivity : AppCompatActivity() {
     private lateinit var okButton: Button
 
     private lateinit var image: Bitmap
+    private lateinit var loadingIndicator: LoadingIndicator
 
     lateinit var name: String
 
@@ -52,6 +55,8 @@ class AddDdayActivity : AppCompatActivity() {
         nameEditText = findViewById(R.id.ddayName)
         dateEditText = findViewById(R.id.ddayDate)
         okButton = findViewById(R.id.ddayAddButton)
+
+        loadingIndicator = LoadingIndicator(this)
 
         initDefaultDate()
         setEventHandlers()
@@ -140,17 +145,22 @@ class AddDdayActivity : AppCompatActivity() {
         }
 
         okButton.setOnClickListener {
+            loadingIndicator.on()
             val newOne = Dday(
                 name,
                 getString(R.string.date_string, year, month, dayOfMonth)
             )
             newOne.save()
-            saveImage(newOne.index)
 
-            val returnIntent = Intent()
-            returnIntent.putExtra("index", newOne.index)
-            setResult(RESULT_OK, returnIntent)
-            finish()
+            AsyncTask.execute(fun () {
+                saveImage(newOne.index)
+
+                val returnIntent = Intent()
+                returnIntent.putExtra("index", newOne.index)
+                setResult(RESULT_OK, returnIntent)
+                loadingIndicator.off()
+                finish()
+            })
         }
     }
 

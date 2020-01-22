@@ -6,16 +6,18 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.dday.model.Dday
 import com.example.dday.utils.Storage
+import com.example.dday.widget.LoadingIndicator
 import com.jakewharton.threetenabp.AndroidThreeTen
-import kotlinx.android.synthetic.main.activity_main.fab
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -23,10 +25,15 @@ class MainActivity : AppCompatActivity() {
         const val REQUEST_DDAY_DETAIL = 1
     }
 
-    private lateinit var ddayListView: ListView
-    private lateinit var ddayListAdapter: DdayListAdapter
+    private lateinit var rvDday: RecyclerView
     private lateinit var appToolbar: Toolbar
+
+    private lateinit var viewManager: RecyclerView.LayoutManager // FIXME: change name
+    private lateinit var viewAdapter: DdayRecyclerAdapter // FIXME: change name
+    private lateinit var loadingIndicator: LoadingIndicator
+
     private var removable = false
+    private lateinit var ddays: ArrayList<Dday>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,14 +41,17 @@ class MainActivity : AppCompatActivity() {
         Storage.init(applicationContext)
         AndroidThreeTen.init(this)
 
-        ddayListView = findViewById(R.id.ddayList)
+        rvDday = findViewById(R.id.ddayList)
         appToolbar= findViewById(R.id.toolbar)
+        loadingIndicator = LoadingIndicator(this)
+
+        ddays = ArrayList(Dday.getAll().toList())
 
         setDdayListView()
 
         setSupportActionBar(appToolbar)
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener {
             val intent = Intent(this, AddDdayActivity::class.java)
             doneRemovable()
             startActivityForResult(intent, REQUEST_ADD_DDAY)
@@ -78,9 +88,8 @@ class MainActivity : AppCompatActivity() {
             if(resultCode == RESULT_OK) {
                 if(data != null) {
                     val index = data.getIntExtra("index", 0)
-                    ddayListAdapter.add(
-                        Dday.get(index)
-                    )
+                    // FIXME: ddays 에 넣지 말고, viewAdapter 에 넣을 것
+                    ddays.add(Dday.get(index)!!)
                 }
             }
         }
@@ -88,20 +97,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setDdayListView() {
-        val ddays: ArrayList<Dday> = ArrayList(Dday.getAll())
+        viewManager = LinearLayoutManager(this)
+        viewAdapter = DdayRecyclerAdapter(
+            ddays,
+            object: DdayRecyclerAdapter.OnItemClickListener {
+                override fun onItemClick(itemView: View, dday: Dday) {
+                    if(!removable) {
+                        goToDetailActivity(itemView, dday)
+                    }
+                }
 
-        ddayListAdapter = DdayListAdapter(this, ddays)
-        ddayListView.adapter = ddayListAdapter
-        ddayListView.setOnItemClickListener { parent, view, position, id ->
-            val selected = ddayListAdapter.getItem(position)
-            if(!removable && selected != null) {
-                goToDetailActivity(view, selected)
+                override fun onItemLongClick(itemView: View, dday: Dday) {
+                    setRemovable()
+                }
             }
-        }
-        ddayListView.setOnItemLongClickListener { parent, view, position, id ->
-            setRemovable()
-            true
-        }
+        )
+
+        rvDday.layoutManager = viewManager
+        rvDday.adapter = viewAdapter
     }
 
     private fun setRemovable() {
@@ -110,7 +123,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         removable = true
-        ddayListAdapter.setCheckableMode()
+        viewAdapter.setCheckableMode()
 
         setToolbarVisibility(View.VISIBLE)
     }
@@ -122,9 +135,9 @@ class MainActivity : AppCompatActivity() {
 
         removable = false
         if(doRemove) {
-            ddayListAdapter.removeSelectedItems()
+            viewAdapter.removeSelectedItems()
         }
-        ddayListAdapter.finishCheckableMode()
+        viewAdapter.finishCheckableMode()
 
         setToolbarVisibility(View.GONE)
     }
@@ -149,7 +162,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setToolbarVisibility(visibility: Int) {
         appToolbar.visibility = visibility
-        val params = ddayListView.layoutParams as ViewGroup.MarginLayoutParams
+        val params = rvDday.layoutParams as ViewGroup.MarginLayoutParams
         params.setMargins(
             params.leftMargin,
             if(visibility != View.GONE) resources.getDimensionPixelSize(R.dimen.toolbar_height) else params.bottomMargin,
@@ -157,6 +170,6 @@ class MainActivity : AppCompatActivity() {
             params.bottomMargin
 
         )
-        ddayListView.layoutParams = params
+        rvDday.layoutParams = params
     }
 }

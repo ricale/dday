@@ -6,21 +6,43 @@ import android.content.ContextWrapper
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import com.example.dday.model.Dday
 import java.io.File
+import java.io.FileOutputStream
 
 object ImageUtil {
-    fun getDdayThumbnail(context: Context, dday: Dday): Bitmap? {
+    private lateinit var context: Context
+
+    private fun getFile(dirname: String, filename: String): File {
         val cw = ContextWrapper(context)
-        val directory = cw.getDir("thumbnail", Context.MODE_PRIVATE)
+        val directory = cw.getDir(dirname, Context.MODE_PRIVATE)
         if(!directory.exists()) {
             directory.mkdir()
         }
-        val path = File(directory, "thumbnail${dday.index}.png")
+        return File(directory, filename)
+    }
+
+    fun init(c: Context) {
+        context = c
+    }
+
+    fun getImage(dirname: String, filename: String): Bitmap? {
+        val file = getFile(dirname, filename)
 
         val options = BitmapFactory.Options()
         options.inPreferredConfig = Bitmap.Config.ARGB_8888
-        return BitmapFactory.decodeFile(path.absolutePath, options)
+        return BitmapFactory.decodeFile(file.absolutePath, options)
+    }
+
+    fun saveImage(dirname: String, filename: String, image: Bitmap) {
+        val file = getFile(dirname, filename)
+        val fos = FileOutputStream(file)
+        image.compress(Bitmap.CompressFormat.PNG, 100, fos)
+        fos.close()
+    }
+
+    fun removeImage(dirname: String, filename: String) {
+        val file = getFile(dirname, filename)
+        file.delete()
     }
 
     fun getImageFromUri(resolver: ContentResolver, imageUri: Uri): Bitmap {

@@ -2,7 +2,6 @@ package com.example.dday
 
 import android.animation.AnimatorSet
 import android.os.Bundle
-import android.transition.ChangeBounds
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dday.model.Dday
 import com.example.dday.utils.AnimatorFactory
 import com.example.dday.utils.DateUtil
-import com.example.dday.utils.ImageUtil
 
 class DdayDetailActivity : AppCompatActivity() {
     companion object {
@@ -31,8 +29,8 @@ class DdayDetailActivity : AppCompatActivity() {
         const val SWIPE_ANIM_DURATION = 500L
         const val MIN_DISTANCE_SWIPE = 100
 
-        private val SWIPE_ANIM_TOP_RATE = 0.0f
-        private val SWIPE_ANIM_BOTTOM_RATE = 1.0f
+        private const val SWIPE_ANIM_TOP_RATE = 0.0f
+        private const val SWIPE_ANIM_BOTTOM_RATE = 1.0f
     }
 
     private lateinit var ctLayout: FrameLayout
@@ -119,10 +117,10 @@ class DdayDetailActivity : AppCompatActivity() {
         ViewCompat.setTransitionName(tvMonth, VIEW_NAME_MONTH)
         ViewCompat.setTransitionName(tvDay, VIEW_NAME_DAY)
 
-//        Scene Transition Animation Duration
-        val bounds = ChangeBounds()
-        bounds.duration = 200
-        window.sharedElementEnterTransition = bounds
+////        Scene Transition Animation Duration
+//        val bounds = ChangeBounds()
+//        bounds.duration = 200
+//        window.sharedElementEnterTransition = bounds
     }
 
     private fun setDdayInfo() {
@@ -132,7 +130,7 @@ class DdayDetailActivity : AppCompatActivity() {
         tvMonth.text = getString(R.string.date_string_month, dday.month)
         tvDay.text = getString(R.string.date_string_day, dday.day)
 
-        val bitmap = ImageUtil.getDdayThumbnail(applicationContext, dday)
+        val bitmap = dday.getThumbnail()
         if(bitmap != null) {
             ivBackground.setImageBitmap(bitmap)
         }

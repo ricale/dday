@@ -1,6 +1,9 @@
 package com.example.dday.model
 
+import android.graphics.Bitmap
+import android.os.AsyncTask
 import com.example.dday.utils.DateUtil
+import com.example.dday.utils.ImageUtil
 import com.example.dday.utils.Storage
 import org.json.JSONObject
 import org.threeten.bp.LocalDate
@@ -10,6 +13,9 @@ class Dday(var name: String, var date: String) {
         const val KEY_PREFIX = "dday"
         const val SEPARATOR = "-"
         const val LAST_INDEX_KEY = "lastIndex"
+        const val THUMBNAIL_DIR_NAME = "thumbnail"
+        const val THUMBNAIL_FILE_PREFIX = "thumbnail"
+        const val THUMBNAIL_FILE_EXT = "png"
 
         val DAYS_TO_ADDS = IntArray(36) { (it + 1) * 100 }
 
@@ -78,6 +84,15 @@ class Dday(var name: String, var date: String) {
         }
     }
 
+    private fun getThumbnailFilename(): String =
+        "${THUMBNAIL_FILE_PREFIX}${index}.${THUMBNAIL_FILE_EXT}"
+
+    private fun getStorageKey(): String =
+        "${KEY_PREFIX}${SEPARATOR}${index}"
+
+    private fun getStorageLastKey(): String =
+        "${KEY_PREFIX}${SEPARATOR}${LAST_INDEX_KEY}"
+
     fun save() {
         index = getIndex()
         val json: JSONObject = JSONObject()
@@ -85,12 +100,33 @@ class Dday(var name: String, var date: String) {
         json.put("name", name)
         json.put("date", date)
 
-        Storage.set("${KEY_PREFIX}${SEPARATOR}${index}", json)
-        Storage.set("${KEY_PREFIX}${SEPARATOR}${LAST_INDEX_KEY}", index)
+        Storage.set(getStorageKey(), json)
+        Storage.set(getStorageLastKey(), index)
     }
 
     fun remove() {
-        Storage.remove("${KEY_PREFIX}${SEPARATOR}${index}")
+        AsyncTask.execute {
+            Storage.remove(getStorageKey())
+            ImageUtil.removeImage(
+                THUMBNAIL_DIR_NAME,
+                getThumbnailFilename()
+            )
+        }
+    }
+
+    fun getThumbnail(): Bitmap? {
+        return ImageUtil.getImage(
+            THUMBNAIL_DIR_NAME,
+            getThumbnailFilename()
+        )
+    }
+
+    fun saveThumbnail(image: Bitmap) {
+        ImageUtil.saveImage(
+            THUMBNAIL_DIR_NAME,
+            getThumbnailFilename(),
+            image
+        )
     }
 
     fun getRemainings(): List<Remaining> {

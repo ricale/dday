@@ -28,12 +28,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var rvDday: RecyclerView
     private lateinit var appToolbar: Toolbar
 
-    private lateinit var viewManager: RecyclerView.LayoutManager // FIXME: change name
-    private lateinit var viewAdapter: DdayRecyclerAdapter // FIXME: change name
+    private lateinit var rvDdayAdapter: DdayRecyclerAdapter
     private lateinit var loadingIndicator: LoadingIndicator
 
     private var removable = false
-    private lateinit var ddays: ArrayList<Dday>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,8 +42,6 @@ class MainActivity : AppCompatActivity() {
         rvDday = findViewById(R.id.ddayList)
         appToolbar= findViewById(R.id.toolbar)
         loadingIndicator = LoadingIndicator(this)
-
-        ddays = ArrayList(Dday.getAll().toList())
 
         setDdayListView()
 
@@ -88,8 +84,7 @@ class MainActivity : AppCompatActivity() {
             if(resultCode == RESULT_OK) {
                 if(data != null) {
                     val index = data.getIntExtra("index", 0)
-                    // FIXME: ddays 에 넣지 말고, viewAdapter 에 넣을 것
-                    ddays.add(Dday.get(index)!!)
+                    rvDdayAdapter.addItem(Dday.get(index)!!)
                 }
             }
         }
@@ -97,9 +92,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setDdayListView() {
-        viewManager = LinearLayoutManager(this)
-        viewAdapter = DdayRecyclerAdapter(
-            ddays,
+        rvDdayAdapter = DdayRecyclerAdapter(
+            ArrayList(Dday.getAll()),
             object: DdayRecyclerAdapter.OnItemClickListener {
                 override fun onItemClick(itemView: View, dday: Dday) {
                     if(!removable) {
@@ -113,8 +107,8 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        rvDday.layoutManager = viewManager
-        rvDday.adapter = viewAdapter
+        rvDday.layoutManager = LinearLayoutManager(this)
+        rvDday.adapter = rvDdayAdapter
     }
 
     private fun setRemovable() {
@@ -123,7 +117,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         removable = true
-        viewAdapter.setCheckableMode()
+        rvDdayAdapter.setCheckableMode()
 
         setToolbarVisibility(View.VISIBLE)
     }
@@ -135,9 +129,9 @@ class MainActivity : AppCompatActivity() {
 
         removable = false
         if(doRemove) {
-            viewAdapter.removeSelectedItems()
+            rvDdayAdapter.removeSelectedItems()
         }
-        viewAdapter.finishCheckableMode()
+        rvDdayAdapter.finishCheckableMode()
 
         setToolbarVisibility(View.GONE)
     }

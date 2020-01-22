@@ -101,7 +101,7 @@ class DdayRecyclerAdapter(private val ddays: ArrayList<Dday>, private val listen
             if(!loadingImages.contains(ddayIdx)) {
                 loadingImages.put(ddayIdx, true)
 
-                val loadImageTask = LoadImageTask(context, object: LoadImageTask.Listener {
+                val loadImageTask = LoadImageTask(object: LoadImageTask.Listener {
                     override fun onSuccess(bitmap: Bitmap?) {
                         if(bitmap != null) {
                             images.put(ddayIdx, bitmap)
@@ -127,6 +127,11 @@ class DdayRecyclerAdapter(private val ddays: ArrayList<Dday>, private val listen
                 }
             }
         }
+    }
+
+    fun addItem(dday: Dday) {
+        ddays.add(dday)
+        notifyDataSetChanged()
     }
 
     fun setCheckableMode() {

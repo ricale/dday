@@ -3,7 +3,6 @@ package com.example.dday.widget
 import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.util.Log
 import androidx.appcompat.app.AppCompatDialog
 import com.example.dday.R
 

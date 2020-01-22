@@ -2,7 +2,6 @@ package com.example.dday
 
 import android.app.DatePickerDialog
 import android.content.Context
-import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Rect
@@ -22,9 +21,7 @@ import com.example.dday.widget.LoadingIndicator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import org.threeten.bp.LocalDate
-import java.io.File
 import java.io.FileNotFoundException
-import java.io.FileOutputStream
 
 class AddDdayActivity : AppCompatActivity() {
     companion object {
@@ -67,7 +64,7 @@ class AddDdayActivity : AppCompatActivity() {
             if(resultCode == RESULT_OK) {
                 if(data != null) {
                     try {
-                        image = ImageUtil.getImageFromUri(contentResolver, data.data!!)
+                        image = ImageUtil.getImageFromUri(contentResolver, data.data!!, 600)
                         imageView.setImageBitmap(image)
                         enableOkButtonIfNeeded()
                     } catch (e: FileNotFoundException) {
@@ -153,7 +150,7 @@ class AddDdayActivity : AppCompatActivity() {
             newOne.save()
 
             AsyncTask.execute(fun () {
-                saveImage(newOne.index)
+                newOne.saveThumbnail(image)
 
                 val returnIntent = Intent()
                 returnIntent.putExtra("index", newOne.index)
@@ -175,18 +172,5 @@ class AddDdayActivity : AppCompatActivity() {
         DatePickerDialog(this, DatePickerDialog.OnDateSetListener {_, y, m, d ->
             setDateText(y, m + 1, d)
         }, year, month - 1, dayOfMonth).show()
-    }
-
-    private fun saveImage(index: Int) {
-        val cw = ContextWrapper(applicationContext)
-        val directory = cw.getDir("thumbnail", Context.MODE_PRIVATE)
-        if(!directory.exists()) {
-            directory.mkdir()
-        }
-        val path = File(directory, "thumbnail${index}.png")
-
-        val fos = FileOutputStream(path)
-        image.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        fos.close()
     }
 }

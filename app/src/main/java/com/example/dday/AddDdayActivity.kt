@@ -64,7 +64,7 @@ class AddDdayActivity : AppCompatActivity() {
             if(resultCode == RESULT_OK) {
                 if(data != null) {
                     try {
-                        image = ImageUtil.getImageFromUri(contentResolver, data.data!!, 600)
+                        image = ImageUtil.getImageFromUri(data.data!!, 600)
                         imageView.setImageBitmap(image)
                         enableOkButtonIfNeeded()
                     } catch (e: FileNotFoundException) {

@@ -1,10 +1,10 @@
-package com.example.dday.model
+package kr.ricale.dday.model
 
 import android.graphics.Bitmap
 import android.os.AsyncTask
-import com.example.dday.utils.DateUtil
-import com.example.dday.utils.ImageUtil
-import com.example.dday.utils.Storage
+import kr.ricale.dday.utils.DateUtil
+import kr.ricale.dday.utils.ImageUtil
+import kr.ricale.dday.utils.Storage
 import org.json.JSONObject
 import org.threeten.bp.LocalDate
 
@@ -32,7 +32,9 @@ class Dday(var name: String, var date: String) {
         fun getAll(): List<Dday> {
             val all = Storage.getAll()
             return all.filterKeys {
-                it.contains(KEY_PREFIX) && !it.contains(LAST_INDEX_KEY)
+                it.contains(KEY_PREFIX) && !it.contains(
+                    LAST_INDEX_KEY
+                )
             }.keys.map {
                 val splited = it.split("-")
                 val index = splited.get(1).toInt()
@@ -47,7 +49,7 @@ class Dday(var name: String, var date: String) {
         }
 
         fun getIndex(): Int {
-            val lastIndex = Storage.get("${KEY_PREFIX}${SEPARATOR}${LAST_INDEX_KEY}", 0)
+            val lastIndex = Storage.get("$KEY_PREFIX$SEPARATOR$LAST_INDEX_KEY", 0)
             return if(lastIndex is Int) {
                 lastIndex + 1
             } else {
@@ -68,7 +70,7 @@ class Dday(var name: String, var date: String) {
     }
 
     constructor(index: Int): this("", ""){
-        val json: JSONObject = Storage.get("${KEY_PREFIX}${SEPARATOR}${index}") ?: throw Exception()
+        val json: JSONObject = Storage.get("$KEY_PREFIX$SEPARATOR${index}") ?: throw Exception()
 
         this.index = index
         this.name = json.getString("name")
@@ -85,13 +87,13 @@ class Dday(var name: String, var date: String) {
     }
 
     private fun getThumbnailFilename(): String =
-        "${THUMBNAIL_FILE_PREFIX}${index}.${THUMBNAIL_FILE_EXT}"
+        "$THUMBNAIL_FILE_PREFIX${index}.$THUMBNAIL_FILE_EXT"
 
     private fun getStorageKey(): String =
-        "${KEY_PREFIX}${SEPARATOR}${index}"
+        "$KEY_PREFIX$SEPARATOR${index}"
 
     private fun getStorageLastKey(): String =
-        "${KEY_PREFIX}${SEPARATOR}${LAST_INDEX_KEY}"
+        "$KEY_PREFIX$SEPARATOR$LAST_INDEX_KEY"
 
     fun save() {
         index = getIndex()
@@ -105,8 +107,8 @@ class Dday(var name: String, var date: String) {
     }
 
     fun remove() {
+        Storage.remove(getStorageKey())
         AsyncTask.execute {
-            Storage.remove(getStorageKey())
             ImageUtil.removeImage(
                 THUMBNAIL_DIR_NAME,
                 getThumbnailFilename()

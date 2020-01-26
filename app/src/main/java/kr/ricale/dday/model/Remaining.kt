@@ -1,4 +1,4 @@
-package com.example.dday.model
+package kr.ricale.dday.model
 
 import org.threeten.bp.LocalDate
 

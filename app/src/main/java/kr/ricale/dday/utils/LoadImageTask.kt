@@ -1,8 +1,8 @@
-package com.example.dday.utils
+package kr.ricale.dday.utils
 
 import android.graphics.Bitmap
 import android.os.AsyncTask
-import com.example.dday.model.Dday
+import kr.ricale.dday.model.Dday
 
 class LoadImageTask(private val listener: Listener): AsyncTask<Dday, Void, Bitmap>() {
 

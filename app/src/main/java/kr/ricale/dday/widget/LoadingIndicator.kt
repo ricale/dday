@@ -1,10 +1,10 @@
-package com.example.dday.widget
+package kr.ricale.dday.widget
 
 import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatDialog
-import com.example.dday.R
+import kr.ricale.dday.R
 
 class LoadingIndicator(activity: Activity) {
     private val dialog = AppCompatDialog(activity)

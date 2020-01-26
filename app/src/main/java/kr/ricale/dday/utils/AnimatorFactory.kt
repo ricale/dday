@@ -1,4 +1,4 @@
-package com.example.dday.utils
+package kr.ricale.dday.utils
 
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator

@@ -1,4 +1,4 @@
-package com.example.dday
+package kr.ricale.dday
 
 import android.animation.AnimatorSet
 import android.os.Bundle
@@ -13,9 +13,9 @@ import androidx.constraintlayout.widget.Guideline
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dday.model.Dday
-import com.example.dday.utils.AnimatorFactory
-import com.example.dday.utils.DateUtil
+import kr.ricale.dday.model.Dday
+import kr.ricale.dday.utils.AnimatorFactory
+import kr.ricale.dday.utils.DateUtil
 
 class DdayDetailActivity : AppCompatActivity() {
     companion object {
@@ -110,12 +110,24 @@ class DdayDetailActivity : AppCompatActivity() {
     }
 
     private fun setTransition() {
-        ViewCompat.setTransitionName(ctLayout, VIEW_NAME_CONTAINER)
-        ViewCompat.setTransitionName(tvDiff, VIEW_NAME_DIFF)
-        ViewCompat.setTransitionName(tvName, VIEW_NAME_NAME)
-        ViewCompat.setTransitionName(tvYear, VIEW_NAME_YEAR)
-        ViewCompat.setTransitionName(tvMonth, VIEW_NAME_MONTH)
-        ViewCompat.setTransitionName(tvDay, VIEW_NAME_DAY)
+        ViewCompat.setTransitionName(ctLayout,
+            VIEW_NAME_CONTAINER
+        )
+        ViewCompat.setTransitionName(tvDiff,
+            VIEW_NAME_DIFF
+        )
+        ViewCompat.setTransitionName(tvName,
+            VIEW_NAME_NAME
+        )
+        ViewCompat.setTransitionName(tvYear,
+            VIEW_NAME_YEAR
+        )
+        ViewCompat.setTransitionName(tvMonth,
+            VIEW_NAME_MONTH
+        )
+        ViewCompat.setTransitionName(tvDay,
+            VIEW_NAME_DAY
+        )
 
 ////        Scene Transition Animation Duration
 //        val bounds = ChangeBounds()
@@ -149,7 +161,8 @@ class DdayDetailActivity : AppCompatActivity() {
 
     private fun setRemainings() {
         viewManager = LinearLayoutManager(this)
-        viewAdapter = RemainingRecyclerAdapter(dday.getRemainings().toTypedArray())
+        viewAdapter =
+            RemainingRecyclerAdapter(dday.getRemainings().toTypedArray())
 
         rvRemainings.layoutManager = viewManager
         rvRemainings.adapter = viewAdapter

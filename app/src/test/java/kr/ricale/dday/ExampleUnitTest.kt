@@ -1,4 +1,4 @@
-package com.example.dday
+package kr.ricale.dday
 
 import org.junit.Test
 

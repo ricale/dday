@@ -1,4 +1,4 @@
-package com.example.dday
+package kr.ricale.dday
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,11 +13,11 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dday.model.Dday
-import com.example.dday.utils.Storage
-import com.example.dday.widget.LoadingIndicator
 import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.android.synthetic.main.activity_main.*
+import kr.ricale.dday.model.Dday
+import kr.ricale.dday.utils.Storage
+import kr.ricale.dday.widget.LoadingIndicator
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -50,7 +50,9 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener {
             val intent = Intent(this, AddDdayActivity::class.java)
             doneRemovable()
-            startActivityForResult(intent, REQUEST_ADD_DDAY)
+            startActivityForResult(intent,
+                REQUEST_ADD_DDAY
+            )
         }
     }
 
@@ -94,14 +96,20 @@ class MainActivity : AppCompatActivity() {
     private fun setDdayListView() {
         rvDdayAdapter = DdayRecyclerAdapter(
             ArrayList(Dday.getAll()),
-            object: DdayRecyclerAdapter.OnItemClickListener {
-                override fun onItemClick(itemView: View, dday: Dday) {
-                    if(!removable) {
+            object : DdayRecyclerAdapter.OnItemClickListener {
+                override fun onItemClick(
+                    itemView: View,
+                    dday: Dday
+                ) {
+                    if (!removable) {
                         goToDetailActivity(itemView, dday)
                     }
                 }
 
-                override fun onItemLongClick(itemView: View, dday: Dday) {
+                override fun onItemLongClick(
+                    itemView: View,
+                    dday: Dday
+                ) {
                     setRemovable()
                 }
             }
@@ -142,16 +150,29 @@ class MainActivity : AppCompatActivity() {
 
         val activityOptions: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
             this,
-            Pair<View, String>(view, DdayDetailActivity.VIEW_NAME_CONTAINER),
-            Pair<View, String>(view.findViewById(R.id.ddayListItemDiff), DdayDetailActivity.VIEW_NAME_DIFF),
-            Pair<View, String>(view.findViewById(R.id.ddayListItemName), DdayDetailActivity.VIEW_NAME_NAME),
-            Pair<View, String>(view.findViewById(R.id.ddayListItemYear), DdayDetailActivity.VIEW_NAME_YEAR),
-            Pair<View, String>(view.findViewById(R.id.ddayListItemMonth), DdayDetailActivity.VIEW_NAME_MONTH),
-            Pair<View, String>(view.findViewById(R.id.ddayListItemDay), DdayDetailActivity.VIEW_NAME_DAY)
+            Pair<View, String>(view,
+                DdayDetailActivity.VIEW_NAME_CONTAINER
+            ),
+            Pair<View, String>(view.findViewById(R.id.ddayListItemDiff),
+                DdayDetailActivity.VIEW_NAME_DIFF
+            ),
+            Pair<View, String>(view.findViewById(R.id.ddayListItemName),
+                DdayDetailActivity.VIEW_NAME_NAME
+            ),
+            Pair<View, String>(view.findViewById(R.id.ddayListItemYear),
+                DdayDetailActivity.VIEW_NAME_YEAR
+            ),
+            Pair<View, String>(view.findViewById(R.id.ddayListItemMonth),
+                DdayDetailActivity.VIEW_NAME_MONTH
+            ),
+            Pair<View, String>(view.findViewById(R.id.ddayListItemDay),
+                DdayDetailActivity.VIEW_NAME_DAY
+            )
         )
 
         doneRemovable()
-        ActivityCompat.startActivityForResult(this, intent, REQUEST_DDAY_DETAIL, activityOptions.toBundle())
+        ActivityCompat.startActivityForResult(this, intent,
+            REQUEST_DDAY_DETAIL, activityOptions.toBundle())
     }
 
     private fun setToolbarVisibility(visibility: Int) {

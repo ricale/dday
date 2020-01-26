@@ -1,4 +1,4 @@
-package com.example.dday.utils
+package kr.ricale.dday.utils
 
 import android.content.Context
 import android.content.ContextWrapper

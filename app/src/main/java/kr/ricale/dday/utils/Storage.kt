@@ -1,4 +1,4 @@
-package com.example.dday.utils
+package kr.ricale.dday.utils
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -50,7 +50,7 @@ object Storage {
     }
 
     fun get(key: String): JSONObject? {
-        val jsonString: String? = Storage.sharedPref.getString(key, null)
+        val jsonString: String? = sharedPref.getString(key, null)
 
         return try {
             JSONObject(jsonString ?: "")

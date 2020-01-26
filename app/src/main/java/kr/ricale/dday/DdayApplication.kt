@@ -1,7 +1,7 @@
-package com.example.dday
+package kr.ricale.dday
 
 import android.app.Application
-import com.example.dday.utils.ImageUtil
+import kr.ricale.dday.utils.ImageUtil
 
 class DdayApplication: Application() {
     override fun onCreate() {

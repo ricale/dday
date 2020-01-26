@@ -1,4 +1,4 @@
-package com.example.dday
+package kr.ricale.dday
 
 import android.graphics.Bitmap
 import android.util.SparseArray
@@ -11,10 +11,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.util.contains
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dday.model.Dday
-import com.example.dday.utils.DateUtil
-import com.example.dday.utils.LoadImageTask
 import com.google.android.material.checkbox.MaterialCheckBox
+import kr.ricale.dday.model.Dday
+import kr.ricale.dday.utils.DateUtil
+import kr.ricale.dday.utils.LoadImageTask
 
 class DdayRecyclerAdapter(private val ddays: ArrayList<Dday>, private val listener: OnItemClickListener):
     RecyclerView.Adapter<DdayRecyclerAdapter.ViewHolder>() {
@@ -101,9 +101,10 @@ class DdayRecyclerAdapter(private val ddays: ArrayList<Dday>, private val listen
             if(!loadingImages.contains(ddayIdx)) {
                 loadingImages.put(ddayIdx, true)
 
-                val loadImageTask = LoadImageTask(object: LoadImageTask.Listener {
+                val loadImageTask = LoadImageTask(object :
+                    LoadImageTask.Listener {
                     override fun onSuccess(bitmap: Bitmap?) {
-                        if(bitmap != null) {
+                        if (bitmap != null) {
                             images.put(ddayIdx, bitmap)
                             holder.setImage(bitmap)
                         }

@@ -1,4 +1,4 @@
-package com.example.dday.utils
+package kr.ricale.dday.utils
 
 import org.threeten.bp.LocalDate
 import org.threeten.bp.temporal.ChronoUnit

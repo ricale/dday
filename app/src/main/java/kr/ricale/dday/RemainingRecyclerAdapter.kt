@@ -1,4 +1,4 @@
-package com.example.dday
+package kr.ricale.dday
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dday.model.Remaining
-import com.example.dday.utils.DateUtil
+import kr.ricale.dday.model.Remaining
+import kr.ricale.dday.utils.DateUtil
 
 class RemainingRecyclerAdapter(private val myDataset: Array<Remaining>):
         RecyclerView.Adapter<RemainingRecyclerAdapter.ViewHolder>() {

@@ -1,4 +1,4 @@
-package com.example.dday
+package kr.ricale.dday
 
 import android.app.DatePickerDialog
 import android.content.Context
@@ -15,9 +15,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.dday.model.Dday
-import com.example.dday.utils.ImageUtil
-import com.example.dday.widget.LoadingIndicator
+import kr.ricale.dday.model.Dday
+import kr.ricale.dday.utils.ImageUtil
+import kr.ricale.dday.widget.LoadingIndicator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import org.threeten.bp.LocalDate
@@ -121,7 +121,9 @@ class AddDdayActivity : AppCompatActivity() {
         imageButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
-            startActivityForResult(intent, REQUEST_GET_IMAGE)
+            startActivityForResult(intent,
+                REQUEST_GET_IMAGE
+            )
         }
 
         nameEditText.addTextChangedListener(object: TextWatcher {
@@ -145,7 +147,12 @@ class AddDdayActivity : AppCompatActivity() {
             loadingIndicator.on()
             val newOne = Dday(
                 name,
-                getString(R.string.date_string, year, month, dayOfMonth)
+                getString(
+                    R.string.date_string,
+                    year,
+                    month,
+                    dayOfMonth
+                )
             )
             newOne.save()
 

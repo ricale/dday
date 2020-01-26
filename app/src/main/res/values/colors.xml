@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorAccent">#9fc6da</color>
+    <color name="colorAccent">#9fa8da</color>
     <color name="colorPrimaryDark">#121212</color>
 
     <color name="colorPrimary">#9fa8da</color>
@@ -16,4 +16,5 @@
     <color name="colorImageTint">#55000000</color>
     <color name="colorImageBackground">#242424</color>
     <color name="colorRemainingListBackground">#99212121</color>
+    <color name="colorOnImage">#CCC</color>
 </resources>

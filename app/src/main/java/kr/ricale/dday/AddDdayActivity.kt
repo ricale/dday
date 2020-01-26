@@ -13,13 +13,13 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.textfield.TextInputEditText
 import kr.ricale.dday.model.Dday
 import kr.ricale.dday.utils.ImageUtil
 import kr.ricale.dday.widget.LoadingIndicator
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.textfield.TextInputEditText
 import org.threeten.bp.LocalDate
 import java.io.FileNotFoundException
 
@@ -28,7 +28,7 @@ class AddDdayActivity : AppCompatActivity() {
         const val REQUEST_GET_IMAGE = 101
     }
     private lateinit var imageView: ImageView
-    private lateinit var imageButton: FloatingActionButton
+    private lateinit var imageButton: ImageButton
     private lateinit var nameEditText: TextInputEditText
     private lateinit var dateEditText: TextInputEditText
     private lateinit var okButton: Button
@@ -117,13 +117,20 @@ class AddDdayActivity : AppCompatActivity() {
         )
     }
 
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent,
+            REQUEST_GET_IMAGE
+        )
+    }
+
     private fun setEventHandlers() {
+        imageView.setOnClickListener {
+            openGallery()
+        }
         imageButton.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
-            startActivityForResult(intent,
-                REQUEST_GET_IMAGE
-            )
+            openGallery()
         }
 
         nameEditText.addTextChangedListener(object: TextWatcher {

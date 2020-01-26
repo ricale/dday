@@ -16,4 +16,5 @@
 
     <string name="image_desc_thumbnail">dday thumbnail</string>
     <string name="image_desc_remaining_list_btn">remaining list button</string>
+    <string name="image_desc_set_thumbnail_btn">button for set thumbnail</string>
 </resources>

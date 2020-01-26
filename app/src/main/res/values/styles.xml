@@ -1,11 +1,45 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
         <!-- Customize your theme here. -->
+        <item name="colorAccent">@color/colorAccent</item>
+
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
+<!--        <item name="colorPrimaryVariant">@color/colorPrimary</item>-->
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="colorOnBackground">@color/colorOnBackground</item>
+
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+
+        <item name="textAppearanceHeadline1">@style/TextAppearance.Dday.Headline1</item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.Dday.Headline2</item>
+        <item name="textAppearanceHeadline3">@style/TextAppearance.Dday.Headline3</item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.Dday.Headline4</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.Dday.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.Dday.Headline6</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.Dday.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.Dday.Subtitle2</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.Dday.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.Dday.Body2</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.Dday.Caption</item>
+        <item name="textAppearanceButton">@style/TextAppearance.Dday.Button</item>
+        <item name="textAppearanceOverline">@style/TextAppearance.Dday.Overline</item>
+
+        <item name="materialCardViewStyle">@style/Widget.Dday.CardView</item>
+
+        <item name="actionBarStyle">@style/Dday.ActionBar</item>
+        <item name="toolbarStyle">@style/Dday.ToolBar</item>
+        <item name="elevationOverlayEnabled">true</item>
+
+        <item name="android:datePickerDialogTheme">@style/MyDatePickerDialogTheme</item>
+
+        <item name="materialButtonStyle">@style/Widget.Dday.Button</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -13,8 +47,72 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+<!--    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->
+<!--    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Dday.ActionBar" parent="Widget.MaterialComponents.ActionBar.Solid">
+        <item name="background">@color/colorSurface</item>
+    </style>
+
+    <style name="Dday.ToolBar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="elevationOverlayEnabled">true</item>
+        <item name="titleTextColor">@color/colorOnSurface</item>
+    </style>
+
+    <style name="Widget.Dday.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">0dp</item>
+        <item name="cardUseCompatPadding">true</item>
+    </style>
+
+    <style name="Widget.Dday.Button" parent="Widget.MaterialComponents.Button">
+<!--        <item name="android:insetTop">0dp</item>-->
+<!--        <item name="android:insetBottom">0dp</item>-->
+        <item name="cornerRadius">0dp</item>
+    </style>
+
+    <style name="TextAppearance.Dday.Headline1" parent="TextAppearance.MaterialComponents.Headline1" />
+    <style name="TextAppearance.Dday.Headline2" parent="TextAppearance.MaterialComponents.Headline2" />
+    <style name="TextAppearance.Dday.Headline3" parent="TextAppearance.MaterialComponents.Headline3" />
+    <style name="TextAppearance.Dday.Headline4" parent="TextAppearance.MaterialComponents.Headline4" />
+    <style name="TextAppearance.Dday.Headline5" parent="TextAppearance.MaterialComponents.Headline5" />
+    <style name="TextAppearance.Dday.Headline6" parent="TextAppearance.MaterialComponents.Headline6" />
+    <style name="TextAppearance.Dday.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1" />
+    <style name="TextAppearance.Dday.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2" />
+    <style name="TextAppearance.Dday.Body1" parent="TextAppearance.MaterialComponents.Body1" />
+    <style name="TextAppearance.Dday.Body2" parent="TextAppearance.MaterialComponents.Body2" />
+    <style name="TextAppearance.Dday.Caption" parent="TextAppearance.MaterialComponents.Caption" />
+    <style name="TextAppearance.Dday.Button" parent="TextAppearance.MaterialComponents.Button" />
+    <style name="TextAppearance.Dday.Overline" parent="TextAppearance.MaterialComponents.Overline" />
+
+    <style name="TextAppearance.Dday.Detail.Name" parent="TextAppearance.Dday.Headline4">
+    </style>
+    <style name="TextAppearance.Dday.Detail.Date" parent="TextAppearance.Dday.Body1">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TextAppearance.Dday.List.Name" parent="TextAppearance.Dday.Headline4">
+    </style>
+    <style name="TextAppearance.Dday.List.Date" parent="TextAppearance.Dday.Body1">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TextAppearance.Dday.Remaining.Name" parent="TextAppearance.Dday.Headline5">
+    </style>
+    <style name="TextAppearance.Dday.Remaining.Date" parent="TextAppearance.Dday.Caption">
+    </style>
+    <style name="TextAppearance.Dday.Remaining.Count" parent="TextAppearance.Dday.Body1">
+    </style>
+
+    <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Dialog">
+        <item name="android:colorAccent">#FFF</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/MyDatePickerDialogTheme.NegativeButtonStyle</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/MyDatePickerDialogTheme.PositiveButtonStyle</item>
+    </style>
+    <style name="MyDatePickerDialogTheme.NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+
+    </style>
+    <style name="MyDatePickerDialogTheme.PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+
+    </style>
 
 </resources>

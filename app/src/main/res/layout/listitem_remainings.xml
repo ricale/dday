@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/padding_small_component">
+
+    <TextView
+        android:id="@+id/remainingName"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.Dday.Remaining.Name"
+        android:textAlignment="textEnd"
+        android:textColor="@color/colorOnSurface"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:text="1001일" />
+
+    <TextView
+        android:id="@+id/remainingDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin"
+        android:textAppearance="@style/TextAppearance.Dday.Remaining.Date"
+        android:textColor="@color/colorOnSurface"
+        app:layout_constraintTop_toBottomOf="@id/remainingCount"
+        app:layout_constraintLeft_toRightOf="@id/remainingName"
+        tools:text="2019-01-01" />
+
+    <TextView
+        android:id="@+id/remainingCount"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.Dday.Remaining.Count"
+        android:textAlignment="textEnd"
+        android:textColor="@color/colorOnSurface"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="@id/remainingDate"
+        tools:text="D+2001" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

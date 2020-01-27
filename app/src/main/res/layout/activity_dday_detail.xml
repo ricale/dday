@@ -17,8 +17,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/ddayDetailContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:cardElevation="0dp">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/ddayDetailImage"

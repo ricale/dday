@@ -6,9 +6,8 @@ import kr.ricale.dday.model.Dday
 
 class LoadImageTask(private val listener: Listener): AsyncTask<Dday, Void, Bitmap>() {
 
-    override fun doInBackground(vararg dday: Dday?): Bitmap {
-        val bitmap = dday[0]?.getThumbnail()
-        return bitmap!!
+    override fun doInBackground(vararg dday: Dday?): Bitmap? {
+        return dday[0]?.getThumbnail()
     }
 
     override fun onPostExecute(result: Bitmap?) {

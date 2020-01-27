@@ -66,6 +66,9 @@ object ImageUtil {
 
     fun getImage(dirname: String, filename: String): Bitmap? {
         val file = getFile(dirname, filename)
+        if(!file.isFile) {
+            return null
+        }
 
         val options = BitmapFactory.Options()
         options.inPreferredConfig = Bitmap.Config.ARGB_8888
@@ -81,7 +84,9 @@ object ImageUtil {
 
     fun removeImage(dirname: String, filename: String) {
         val file = getFile(dirname, filename)
-        file.delete()
+        if(file.isFile) {
+            file.delete()
+        }
     }
 
     fun getImageFromUri(imageUri: Uri): Bitmap {

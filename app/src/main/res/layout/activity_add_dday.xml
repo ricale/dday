@@ -13,21 +13,24 @@
         android:layout_height="200dp"
         android:scaleType="centerCrop"
         android:background="@color/colorImageBackground"
+        android:tint="@color/colorImageTint"
         android:contentDescription="@string/image_desc_thumbnail"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/ddayBgImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/thumbnail_image_button_size"
+        android:layout_height="@dimen/thumbnail_image_button_size"
         android:src="@drawable/ic_image_white_24dp"
         android:backgroundTint="@android:color/transparent"
-        android:padding="@dimen/margin"
+        android:scaleType="fitXY"
         android:contentDescription="@string/image_desc_set_thumbnail_btn"
         app:tint="@color/colorOnImage"
         app:layout_constraintBottom_toBottomOf="@id/ddayBgImage"
         app:layout_constraintRight_toRightOf="@id/ddayBgImage"
+        app:layout_constraintLeft_toLeftOf="@id/ddayBgImage"
+        app:layout_constraintTop_toTopOf="@id/ddayBgImage"
         />
 
     <com.google.android.material.textfield.TextInputLayout

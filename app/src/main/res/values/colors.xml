@@ -16,5 +16,5 @@
     <color name="colorImageTint">#66000000</color>
     <color name="colorImageBackground">#242424</color>
     <color name="colorRemainingListBackground">#99212121</color>
-    <color name="colorOnImage">#CCC</color>
+    <color name="colorOnImage">#AFFF</color>
 </resources>

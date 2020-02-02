@@ -103,6 +103,11 @@
     <style name="TextAppearance.Dday.Remaining.Count" parent="TextAppearance.Dday.Body1">
     </style>
 
+    <style name="TextAppearance.Dday.Notification.Title" parent="TextAppearance.Dday.Caption">
+    </style>
+    <style name="TextAppearance.Dday.Notification.Content" parent="TextAppearance.Dday.Body2">
+    </style>
+
     <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Dialog">
         <item name="android:colorAccent">#FFF</item>
         <item name="android:buttonBarNegativeButtonStyle">@style/MyDatePickerDialogTheme.NegativeButtonStyle</item>

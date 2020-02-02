@@ -13,6 +13,10 @@ import java.io.FileOutputStream
 object ImageUtil {
     private lateinit var context: Context
 
+    fun init(c: Context) {
+        context = c
+    }
+
     private fun getFile(dirname: String, filename: String): File {
         val cw = ContextWrapper(context)
         val directory = cw.getDir(dirname, Context.MODE_PRIVATE)
@@ -58,10 +62,6 @@ object ImageUtil {
             matrix,
             true
         )
-    }
-
-    fun init(c: Context) {
-        context = c
     }
 
     fun getImage(dirname: String, filename: String): Bitmap? {

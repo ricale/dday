@@ -13,6 +13,7 @@ class Dday(var name: String, var date: String) {
         const val KEY_PREFIX = "dday"
         const val SEPARATOR = "-"
         const val LAST_INDEX_KEY = "lastIndex"
+        const val NOTIFICATION_KEY = "notification"
         const val THUMBNAIL_DIR_NAME = "thumbnail"
         const val THUMBNAIL_FILE_PREFIX = "thumbnail"
         const val THUMBNAIL_FILE_EXT = "png"
@@ -32,9 +33,9 @@ class Dday(var name: String, var date: String) {
         fun getAll(): List<Dday> {
             val all = Storage.getAll()
             return all.filterKeys {
-                it.contains(KEY_PREFIX) && !it.contains(
-                    LAST_INDEX_KEY
-                )
+                it.contains(KEY_PREFIX)
+                        && !it.contains(LAST_INDEX_KEY)
+                        && !it.contains(NOTIFICATION_KEY)
             }.keys.map {
                 val splited = it.split("-")
                 val index = splited.get(1).toInt()
@@ -56,6 +57,19 @@ class Dday(var name: String, var date: String) {
                 0
             }
 
+        }
+
+        fun setNotificated(index: Int?) {
+            if(index is Int) {
+                Storage.set("$KEY_PREFIX$SEPARATOR$NOTIFICATION_KEY", index)
+            } else {
+                Storage.remove("$KEY_PREFIX$SEPARATOR$NOTIFICATION_KEY")
+            }
+        }
+
+        fun getNotificated(): Dday? {
+            val notificationIndex = Storage.get("$KEY_PREFIX$SEPARATOR$NOTIFICATION_KEY", 0)
+            return get(notificationIndex!!)
         }
     }
 
@@ -129,6 +143,10 @@ class Dday(var name: String, var date: String) {
             getThumbnailFilename(),
             image
         )
+    }
+
+    fun setAsNotification() {
+        setNotificated(index)
     }
 
     fun getRemainings(): List<Remaining> {

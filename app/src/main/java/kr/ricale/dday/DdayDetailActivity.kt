@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.ricale.dday.model.Dday
 import kr.ricale.dday.utils.AnimatorFactory
 import kr.ricale.dday.utils.DateUtil
+import kr.ricale.dday.utils.DdayNotification
 
 class DdayDetailActivity : AppCompatActivity() {
     companion object {
@@ -41,6 +42,8 @@ class DdayDetailActivity : AppCompatActivity() {
     private lateinit var tvMonth: TextView
     private lateinit var tvDay: TextView
     private lateinit var btnRemainings: ImageButton
+    private lateinit var btnNotification: ImageButton
+
     private lateinit var rvRemainings: RecyclerView
     private lateinit var guideline: Guideline
 
@@ -68,6 +71,7 @@ class DdayDetailActivity : AppCompatActivity() {
         tvMonth = findViewById(R.id.ddayDetailMonth)
         tvDay = findViewById(R.id.ddayDetailDay)
         btnRemainings = findViewById(R.id.ddayDetailRemainingButton)
+        btnNotification= findViewById(R.id.ddayDetailStatusButton)
         rvRemainings = findViewById(R.id.ddayRemainings)
         guideline = findViewById(R.id.ddayDetailGuideline2)
 
@@ -78,6 +82,7 @@ class DdayDetailActivity : AppCompatActivity() {
         setTransition()
         setDdayInfo()
         setRemainings()
+        setDdayNotification()
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -100,6 +105,7 @@ class DdayDetailActivity : AppCompatActivity() {
             hideRemainings()
         } else {
             btnRemainings.visibility = View.GONE
+            btnNotification.visibility = View.GONE
             super.onBackPressed()
         }
     }
@@ -107,6 +113,7 @@ class DdayDetailActivity : AppCompatActivity() {
     override fun onEnterAnimationComplete() {
         super.onEnterAnimationComplete()
         btnRemainings.visibility = View.VISIBLE
+        btnNotification.visibility = View.VISIBLE
     }
 
     private fun setTransition() {
@@ -185,6 +192,31 @@ class DdayDetailActivity : AppCompatActivity() {
             SWIPE_ANIM_DURATION
         ) {
             guideline.setGuidelinePercent(it.animatedValue as Float)
+        }
+    }
+
+    // FIXME: remove duplicated
+    private fun setDdayNotification() {
+        if(Dday.getNotificated()?.index != dday.index) {
+            btnNotification.setImageResource(R.drawable.ic_bookmark_border_white_24dp)
+        } else {
+            btnNotification.setImageResource(R.drawable.ic_bookmark_white_24dp)
+        }
+
+        btnNotification.setOnClickListener {
+            if(Dday.getNotificated()?.index != dday.index) {
+                DdayNotification.show(
+                    dday.name,
+                    DateUtil.getDiffString(dday.diffToday)
+                )
+                dday.setAsNotification()
+                btnNotification.setImageResource(R.drawable.ic_bookmark_white_24dp)
+
+            } else {
+                DdayNotification.hide()
+                Dday.setNotificated(null)
+                btnNotification.setImageResource(R.drawable.ic_bookmark_border_white_24dp)
+            }
         }
     }
 }

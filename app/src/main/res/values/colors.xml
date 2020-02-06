@@ -13,6 +13,10 @@
     <color name="colorOnSurface">#FFFFFF</color>
     <color name="colorOnSurfaceInactive">#77FFFFFF</color>
 
+    <color name="colorNotificationSurface">@color/colorSurface</color>
+    <color name="colorOnNotificationSurface">@color/colorOnSurface</color>
+    <color name="colorOnNotificationSurfaceHeadline">@color/colorOnSurfaceInactive</color>
+
     <color name="colorImageTint">#66000000</color>
     <color name="colorImageBackground">#242424</color>
     <color name="colorRemainingListBackground">#99212121</color>

@@ -195,20 +195,22 @@ class DdayDetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun isNotificated(): Boolean {
+        return Dday.getNotificated()?.index != dday.index
+    }
+
     // FIXME: remove duplicated
     private fun setDdayNotification() {
-        if(Dday.getNotificated()?.index != dday.index) {
-            btnNotification.setImageResource(R.drawable.ic_bookmark_border_white_24dp)
+        val imageResId = if(isNotificated()) {
+            R.drawable.ic_bookmark_border_white_24dp
         } else {
-            btnNotification.setImageResource(R.drawable.ic_bookmark_white_24dp)
+            R.drawable.ic_bookmark_white_24dp
         }
+        btnNotification.setImageResource(imageResId)
 
         btnNotification.setOnClickListener {
-            if(Dday.getNotificated()?.index != dday.index) {
-                DdayNotification.show(
-                    dday.name,
-                    DateUtil.getDiffString(dday.diffToday)
-                )
+            if(isNotificated()) {
+                DdayNotification.show(dday)
                 dday.setAsNotification()
                 btnNotification.setImageResource(R.drawable.ic_bookmark_white_24dp)
 

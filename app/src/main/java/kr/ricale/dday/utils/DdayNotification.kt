@@ -8,6 +8,7 @@ import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import kr.ricale.dday.R
+import kr.ricale.dday.model.Dday
 
 // FIXME: use strings.xml
 object DdayNotification {
@@ -22,7 +23,10 @@ object DdayNotification {
         createChannel()
     }
 
-    fun show(title: String, content: String) {
+    fun show(dday: Dday) {
+        val title = dday.name
+        val content = DateUtil.getDiffString(dday.diffToday)
+
         val notificationLayout = RemoteViews(context.packageName, R.layout.notification_dday)
         notificationLayout.setTextViewText(R.id.notificationDdayTitle, title)
         notificationLayout.setTextViewText(R.id.notificationDdayContent, content)
@@ -50,7 +54,7 @@ object DdayNotification {
             val channel = NotificationChannel(
                 DDAY_CHANNEL_ID,
                 "default",
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_LOW
             )
 
             val notificationManager: NotificationManager =

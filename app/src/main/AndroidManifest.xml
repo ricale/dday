@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar">
+        android:theme="@style/DdayTheme.NoActionBar">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
@@ -23,11 +23,11 @@
         </activity>
         <activity
             android:name=".DdayDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/DdayTheme.NoActionBar"
             />
         <activity
             android:name=".AddDdayActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/DdayTheme.NoActionBar"
             />
     </application>
 

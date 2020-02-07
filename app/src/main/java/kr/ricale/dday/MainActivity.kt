@@ -13,10 +13,8 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.android.synthetic.main.activity_main.*
 import kr.ricale.dday.model.Dday
-import kr.ricale.dday.utils.Storage
 import kr.ricale.dday.widget.LoadingIndicator
 
 class MainActivity : AppCompatActivity() {
@@ -36,8 +34,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Storage.init(applicationContext)
-        AndroidThreeTen.init(this)
 
         rvDday = findViewById(R.id.ddayList)
         appToolbar= findViewById(R.id.toolbar)

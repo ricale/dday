@@ -24,6 +24,7 @@
         <activity
             android:name=".DdayDetailActivity"
             android:theme="@style/DdayTheme.NoActionBar"
+            android:parentActivityName=".MainActivity"
             />
         <activity
             android:name=".AddDdayActivity"

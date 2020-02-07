@@ -22,12 +22,8 @@ class Dday(var name: String, var date: String) {
 
         val YEARS_TO_ADDS = IntArray(10) { it + 1 }
 
-        fun get(index: Int): Dday? {
-            return try {
-                Dday(index)
-            } catch (e: Exception) {
-                null
-            }
+        fun get(index: Int): Dday {
+            return Dday(index)
         }
 
         fun getAll(): List<Dday> {
@@ -51,11 +47,7 @@ class Dday(var name: String, var date: String) {
 
         fun getIndex(): Int {
             val lastIndex = Storage.get("$KEY_PREFIX$SEPARATOR$LAST_INDEX_KEY", 0)
-            return if(lastIndex is Int) {
-                lastIndex + 1
-            } else {
-                0
-            }
+            return lastIndex + 1
 
         }
 
@@ -68,8 +60,8 @@ class Dday(var name: String, var date: String) {
         }
 
         fun getNotificated(): Dday? {
-            val notificationIndex = Storage.get("$KEY_PREFIX$SEPARATOR$NOTIFICATION_KEY", 0)
-            return get(notificationIndex!!)
+            val index = Storage.get("$KEY_PREFIX$SEPARATOR$NOTIFICATION_KEY", 0)
+            return if(index == 0) null else get(index)
         }
     }
 
@@ -84,7 +76,7 @@ class Dday(var name: String, var date: String) {
     }
 
     constructor(index: Int): this("", ""){
-        val json: JSONObject = Storage.get("$KEY_PREFIX$SEPARATOR${index}") ?: throw Exception()
+        val json: JSONObject = Storage.get("$KEY_PREFIX$SEPARATOR${index}")!!
 
         this.index = index
         this.name = json.getString("name")

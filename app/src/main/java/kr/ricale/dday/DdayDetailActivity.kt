@@ -77,7 +77,7 @@ class DdayDetailActivity : AppCompatActivity() {
 
         dday = Dday.get(
             intent.getIntExtra("index", 0)
-        ) ?: throw Exception()
+        )
 
         setTransition()
         setDdayInfo()

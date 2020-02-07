@@ -45,7 +45,7 @@ object Storage {
         return sharedPref.getString(key, defValue)
     }
 
-    fun get(key: String, defValue: Int): Int? {
+    fun get(key: String, defValue: Int): Int {
         return sharedPref.getInt(key, defValue)
     }
 

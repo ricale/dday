@@ -2,11 +2,15 @@ package kr.ricale.dday.utils
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import kr.ricale.dday.DdayDetailActivity
 import kr.ricale.dday.R
 import kr.ricale.dday.model.Dday
 
@@ -16,7 +20,6 @@ object DdayNotification {
     private const val DDAY_NOTIFICATION_ID = 131
 
     private lateinit var context: Context
-//    private var
 
     fun init(c: Context) {
         context = c
@@ -31,9 +34,21 @@ object DdayNotification {
         notificationLayout.setTextViewText(R.id.notificationDdayTitle, title)
         notificationLayout.setTextViewText(R.id.notificationDdayContent, content)
 
+        val intent = Intent(context, DdayDetailActivity::class.java).apply {
+            putExtra("index", dday.index)
+        }
+
+        val pendingIndent = TaskStackBuilder.create(context).run {
+            addNextIntentWithParentStack(intent)
+            getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
         val notification = NotificationCompat.Builder(context, DDAY_CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setCustomContentView(notificationLayout)
+            .setCategory(NotificationCompat.CATEGORY_STATUS)
+            .setVisibility(NotificationCompat.VISIBILITY_SECRET)
+            .setContentIntent(pendingIndent)
             .setShowWhen(false)
             .setOngoing(true)
             .build()
@@ -54,7 +69,7 @@ object DdayNotification {
             val channel = NotificationChannel(
                 DDAY_CHANNEL_ID,
                 "default",
-                NotificationManager.IMPORTANCE_LOW
+                NotificationManager.IMPORTANCE_DEFAULT
             )
 
             val notificationManager: NotificationManager =

@@ -26,6 +26,7 @@ import java.io.FileNotFoundException
 class AddDdayActivity : AppCompatActivity() {
     companion object {
         const val REQUEST_GET_IMAGE = 101
+        const val IMAGE_SIZE = 1200
     }
     private lateinit var imageView: ImageView
     private lateinit var imageButton: ImageButton
@@ -64,7 +65,7 @@ class AddDdayActivity : AppCompatActivity() {
             if(resultCode == RESULT_OK) {
                 if(data != null) {
                     try {
-                        image = ImageUtil.getImageFromUri(data.data!!, 600)
+                        image = ImageUtil.getImageFromUri(data.data!!, IMAGE_SIZE)
                         imageView.setImageBitmap(image)
                         enableOkButtonIfNeeded()
                     } catch (e: FileNotFoundException) {
@@ -164,7 +165,9 @@ class AddDdayActivity : AppCompatActivity() {
             newOne.save()
 
             AsyncTask.execute(fun () {
-                newOne.saveThumbnail(image)
+                if(this::image.isInitialized) {
+                    newOne.saveThumbnail(image)
+                }
 
                 val returnIntent = Intent()
                 returnIntent.putExtra("index", newOne.index)
@@ -177,8 +180,8 @@ class AddDdayActivity : AppCompatActivity() {
 
     private fun enableOkButtonIfNeeded() {
         okButton.isEnabled = (
-            this::name.isInitialized && !name.isBlank() &&
-            this::image.isInitialized
+            this::name.isInitialized && !name.isBlank()
+//                    && this::image.isInitialized
         )
     }
 

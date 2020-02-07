@@ -46,7 +46,7 @@ class DdayRecyclerAdapter(private val ddays: ArrayList<Dday>, private val listen
             }
         }
 
-        fun setImage(bitmap: Bitmap) {
+        fun setImage(bitmap: Bitmap?) {
             ivBackground.setImageBitmap(bitmap)
         }
 
@@ -86,12 +86,9 @@ class DdayRecyclerAdapter(private val ddays: ArrayList<Dday>, private val listen
     override fun getItemCount(): Int = ddays.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val itemView = holder.view
-
         holder.bind(ddays[position], checkable, listener)
 
         val dday = ddays[position]
-        val context = itemView.context
         val ddayIdx = dday.index
 
         if(images.contains(ddayIdx)) {
@@ -104,10 +101,8 @@ class DdayRecyclerAdapter(private val ddays: ArrayList<Dday>, private val listen
                 val loadImageTask = LoadImageTask(object :
                     LoadImageTask.Listener {
                     override fun onSuccess(bitmap: Bitmap?) {
-                        if (bitmap != null) {
-                            images.put(ddayIdx, bitmap)
-                            holder.setImage(bitmap)
-                        }
+                        images.put(ddayIdx, bitmap)
+                        holder.setImage(bitmap)
                         loadingImages.delete(ddayIdx)
                     }
                 })

@@ -4,8 +4,12 @@
 
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="margin">16dp</dimen>
+    <dimen name="notification_margin_vertical">16dp</dimen>
+    <dimen name="notification_margin_horizontal">24dp</dimen>
     <dimen name="dday_card_height">179dp</dimen>
     <dimen name="margin_typo">20dp</dimen>
 
     <dimen name="toolbar_height">54dp</dimen>
+
+    <dimen name="thumbnail_image_button_size">80dp</dimen>
 </resources>

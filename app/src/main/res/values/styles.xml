@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
+    <style name="DdayTheme" parent="Theme.MaterialComponents.DayNight">
         <!-- Customize your theme here. -->
         <item name="colorAccent">@color/colorAccent</item>
 
@@ -31,24 +31,20 @@
         <item name="textAppearanceButton">@style/TextAppearance.Dday.Button</item>
         <item name="textAppearanceOverline">@style/TextAppearance.Dday.Overline</item>
 
-        <item name="materialCardViewStyle">@style/Widget.Dday.CardView</item>
-
         <item name="actionBarStyle">@style/Dday.ActionBar</item>
         <item name="toolbarStyle">@style/Dday.ToolBar</item>
         <item name="elevationOverlayEnabled">true</item>
 
-        <item name="android:datePickerDialogTheme">@style/MyDatePickerDialogTheme</item>
-
+        <item name="materialCardViewStyle">@style/Widget.Dday.CardView</item>
         <item name="materialButtonStyle">@style/Widget.Dday.Button</item>
+
+        <item name="android:datePickerDialogTheme">@style/MyDatePickerDialogTheme</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="DdayTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
-<!--    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->
-<!--    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
 
     <style name="Dday.ActionBar" parent="Widget.MaterialComponents.ActionBar.Solid">
         <item name="background">@color/colorSurface</item>
@@ -58,6 +54,10 @@
         <item name="elevationOverlayEnabled">true</item>
         <item name="titleTextColor">@color/colorOnSurface</item>
     </style>
+
+    <!-- - - - - - - - - -->
+    <!--  Widget styles  -->
+    <!-- - - - - - - - - -->
 
     <style name="Widget.Dday.CardView" parent="Widget.MaterialComponents.CardView">
         <item name="cardCornerRadius">0dp</item>
@@ -69,6 +69,10 @@
 <!--        <item name="android:insetBottom">0dp</item>-->
         <item name="cornerRadius">0dp</item>
     </style>
+
+    <!-- - - - - - - - - - - - - -->
+    <!--  TextAppearance styles  -->
+    <!-- - - - - - - - - - - - - -->
 
     <style name="TextAppearance.Dday.Headline1" parent="TextAppearance.MaterialComponents.Headline1" />
     <style name="TextAppearance.Dday.Headline2" parent="TextAppearance.MaterialComponents.Headline2" />
@@ -103,16 +107,23 @@
     <style name="TextAppearance.Dday.Remaining.Count" parent="TextAppearance.Dday.Body1">
     </style>
 
+    <style name="TextAppearance.Dday.Notification.Title" parent="TextAppearance.Dday.Caption">
+    </style>
+    <style name="TextAppearance.Dday.Notification.Content" parent="TextAppearance.Dday.Body2">
+    </style>
+
+    <!-- - - - - - - - - - - - - - -->
+    <!--  DatePickerDialog styles  -->
+    <!-- - - - - - - - - - - - - - -->
+
     <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Dialog">
         <item name="android:colorAccent">#FFF</item>
         <item name="android:buttonBarNegativeButtonStyle">@style/MyDatePickerDialogTheme.NegativeButtonStyle</item>
         <item name="android:buttonBarPositiveButtonStyle">@style/MyDatePickerDialogTheme.PositiveButtonStyle</item>
     </style>
     <style name="MyDatePickerDialogTheme.NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-
     </style>
     <style name="MyDatePickerDialogTheme.PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-
     </style>
 
 </resources>

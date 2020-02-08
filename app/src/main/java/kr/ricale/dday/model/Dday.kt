@@ -18,9 +18,9 @@ class Dday(var name: String, var date: String) {
         const val THUMBNAIL_FILE_PREFIX = "thumbnail"
         const val THUMBNAIL_FILE_EXT = "png"
 
-        val DAYS_TO_ADDS = IntArray(36) { (it + 1) * 100 }
+        val DAYS_TO_ADDS = IntArray(73) { (it + 1) * 100 }
 
-        val YEARS_TO_ADDS = IntArray(10) { it + 1 }
+        val YEARS_TO_ADDS = IntArray(20) { it + 1 }
 
         fun get(index: Int): Dday {
             return Dday(index)

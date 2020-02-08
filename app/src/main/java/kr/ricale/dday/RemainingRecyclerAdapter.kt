@@ -57,6 +57,4 @@ class RemainingRecyclerAdapter(private val myDataset: Array<Remaining>):
         tvDate.setTextColor(color)
         tvCount.setTextColor(color)
     }
-
-
 }

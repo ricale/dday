@@ -194,13 +194,13 @@ class DdayDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun isNotificated(): Boolean {
+    private fun isNotified(): Boolean {
         return Dday.getNotified()?.index != dday.index
     }
 
     // FIXME: remove duplicated
     private fun setDdayNotification() {
-        val imageResId = if(isNotificated()) {
+        val imageResId = if(isNotified()) {
             R.drawable.ic_bookmark_border_white_24dp
         } else {
             R.drawable.ic_bookmark_white_24dp
@@ -208,7 +208,7 @@ class DdayDetailActivity : AppCompatActivity() {
         btnNotification.setImageResource(imageResId)
 
         btnNotification.setOnClickListener {
-            if(isNotificated()) {
+            if(isNotified()) {
                 dday.setAsNotification()
                 btnNotification.setImageResource(R.drawable.ic_bookmark_white_24dp)
 

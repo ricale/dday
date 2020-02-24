@@ -28,6 +28,7 @@ object DdayNotification {
 
     fun show(dday: Dday) {
         updateMessage(dday)
+        releaseUpdater()
         setUpdater(dday)
     }
 
@@ -110,6 +111,8 @@ object DdayNotification {
                 "default",
                 NotificationManager.IMPORTANCE_DEFAULT
             )
+
+            channel.setSound(null, null)
 
             val notificationManager: NotificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

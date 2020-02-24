@@ -87,7 +87,7 @@ class Dday(var name: String, var date: String) {
         month = split[1].toInt()
         day = split[2].toInt()
 
-        diffToday = DateUtil.getRemaingingDays(LocalDate.of(year, month, day)).toInt()
+        diffToday = DateUtil.getRemainingDays(LocalDate.of(year, month, day)).toInt()
         if(diffToday >= 0) {
             diffToday += 1
         }

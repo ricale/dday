@@ -4,7 +4,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.temporal.ChronoUnit
 
 object DateUtil {
-    fun getRemaingingDays(date: LocalDate): Long {
+    fun getRemainingDays(date: LocalDate): Long {
         return ChronoUnit.DAYS.between(
             date,
             LocalDate.now()

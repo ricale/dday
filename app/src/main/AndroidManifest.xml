@@ -30,6 +30,13 @@
             android:name=".AddDdayActivity"
             android:theme="@style/DdayTheme.NoActionBar"
             />
+        <receiver
+            android:name=".utils.DdayReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="android.intent.action.NOTIFY" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -3,6 +3,7 @@ package kr.ricale.dday.model
 import android.graphics.Bitmap
 import android.os.AsyncTask
 import kr.ricale.dday.utils.DateUtil
+import kr.ricale.dday.utils.DdayNotification
 import kr.ricale.dday.utils.ImageUtil
 import kr.ricale.dday.utils.Storage
 import org.json.JSONObject
@@ -51,7 +52,7 @@ class Dday(var name: String, var date: String) {
 
         }
 
-        fun setNotificated(index: Int?) {
+        fun setNotified(index: Int?) {
             if(index is Int) {
                 Storage.set("$KEY_PREFIX$SEPARATOR$NOTIFICATION_KEY", index)
             } else {
@@ -59,7 +60,7 @@ class Dday(var name: String, var date: String) {
             }
         }
 
-        fun getNotificated(): Dday? {
+        fun getNotified(): Dday? {
             val index = Storage.get("$KEY_PREFIX$SEPARATOR$NOTIFICATION_KEY", 0)
             return if(index == 0) null else get(index)
         }
@@ -86,7 +87,7 @@ class Dday(var name: String, var date: String) {
         month = split[1].toInt()
         day = split[2].toInt()
 
-        diffToday = DateUtil.getRemaingingDays(LocalDate.of(year, month, day)).toInt()
+        diffToday = DateUtil.getRemainingDays(LocalDate.of(year, month, day)).toInt()
         if(diffToday >= 0) {
             diffToday += 1
         }
@@ -138,7 +139,13 @@ class Dday(var name: String, var date: String) {
     }
 
     fun setAsNotification() {
-        setNotificated(index)
+        setNotified(index)
+        DdayNotification.show(get(index))
+    }
+
+    fun removeFromNotification() {
+        DdayNotification.hide()
+        setNotified(null)
     }
 
     fun getRemainings(): List<Remaining> {

@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.ricale.dday.model.Dday
 import kr.ricale.dday.utils.AnimatorFactory
 import kr.ricale.dday.utils.DateUtil
-import kr.ricale.dday.utils.DdayNotification
 
 class DdayDetailActivity : AppCompatActivity() {
     companion object {
@@ -195,13 +194,13 @@ class DdayDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun isNotificated(): Boolean {
-        return Dday.getNotificated()?.index != dday.index
+    private fun isNotified(): Boolean {
+        return Dday.getNotified()?.index != dday.index
     }
 
     // FIXME: remove duplicated
     private fun setDdayNotification() {
-        val imageResId = if(isNotificated()) {
+        val imageResId = if(isNotified()) {
             R.drawable.ic_bookmark_border_white_24dp
         } else {
             R.drawable.ic_bookmark_white_24dp
@@ -209,14 +208,12 @@ class DdayDetailActivity : AppCompatActivity() {
         btnNotification.setImageResource(imageResId)
 
         btnNotification.setOnClickListener {
-            if(isNotificated()) {
-                DdayNotification.show(dday)
+            if(isNotified()) {
                 dday.setAsNotification()
                 btnNotification.setImageResource(R.drawable.ic_bookmark_white_24dp)
 
             } else {
-                DdayNotification.hide()
-                Dday.setNotificated(null)
+                dday.removeFromNotification()
                 btnNotification.setImageResource(R.drawable.ic_bookmark_border_white_24dp)
             }
         }

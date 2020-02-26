@@ -32,7 +32,7 @@ class RemainingRecyclerAdapter(private val myDataset: Array<Remaining>):
         val remaining = myDataset[position]
         val name = remaining.name
         val date = remaining.date
-        val period = DateUtil.getRemaingingDays(date)
+        val period = DateUtil.getRemainingDays(date)
 
         tvName.text = name
         tvDate.text =

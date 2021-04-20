@@ -62,7 +62,11 @@ class Dday(var name: String, var date: String) {
 
         fun getNotified(): Dday? {
             val index = Storage.get("$KEY_PREFIX$SEPARATOR$NOTIFICATION_KEY", 0)
-            return if(index == 0) null else get(index)
+            return try {
+                if (index == 0) null else get(index)
+            } catch(e: Exception) {
+                null
+            }
         }
     }
 
@@ -76,8 +80,8 @@ class Dday(var name: String, var date: String) {
         this.index = index
     }
 
-    constructor(index: Int): this("", ""){
-        val json: JSONObject = Storage.get("$KEY_PREFIX$SEPARATOR${index}")!!
+    constructor(index: Int): this("", "") {
+        val json: JSONObject = Storage.get("$KEY_PREFIX$SEPARATOR${index}") ?: throw Exception("No record");
 
         this.index = index
         this.name = json.getString("name")
@@ -114,6 +118,7 @@ class Dday(var name: String, var date: String) {
     }
 
     fun remove() {
+        removeFromNotification()
         Storage.remove(getStorageKey())
         AsyncTask.execute {
             ImageUtil.removeImage(

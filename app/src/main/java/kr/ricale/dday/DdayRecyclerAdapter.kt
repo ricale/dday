@@ -24,7 +24,7 @@ class DdayRecyclerAdapter(private val ddays: ArrayList<Dday>, private val listen
     private var images = SparseArray<Bitmap>()
     private var loadingImages = SparseBooleanArray()
 
-    class ViewHolder(val view: View): RecyclerView.ViewHolder(view) {
+    class ViewHolder(private val view: View): RecyclerView.ViewHolder(view) {
         private val ivBackground: ImageView = view.findViewById(R.id.ddayListItemImage)
         private val tvDiff: TextView = view.findViewById(R.id.ddayListItemDiff)
         private val tvName: TextView = view.findViewById(R.id.ddayListItemName)

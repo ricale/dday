@@ -19,6 +19,7 @@ import kr.ricale.dday.widget.LoadingIndicator
 
 class MainActivity : AppCompatActivity() {
     companion object {
+        const val TAG = "MainActivity"
         const val REQUEST_ADD_DDAY = 0
         const val REQUEST_DDAY_DETAIL = 1
     }
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         rvDday = findViewById(R.id.ddayList)
-        appToolbar= findViewById(R.id.toolbar)
+        appToolbar = findViewById(R.id.toolbar)
         loadingIndicator = LoadingIndicator(this)
 
         setDdayListView()
@@ -82,7 +83,16 @@ class MainActivity : AppCompatActivity() {
             if(resultCode == RESULT_OK) {
                 if(data != null) {
                     val index = data.getIntExtra("index", 0)
-                    rvDdayAdapter.addItem(Dday.get(index)!!)
+                    rvDdayAdapter.addItem(Dday.get(index))
+                }
+            }
+        } else if(requestCode == REQUEST_DDAY_DETAIL) {
+            if(resultCode == RESULT_OK) {
+                if(data != null) {
+                    val index = data.getIntExtra("edited", 0)
+                    if(index != 0) {
+                        rvDdayAdapter.updateItem(Dday.get(index))
+                    }
                 }
             }
         }
@@ -93,19 +103,13 @@ class MainActivity : AppCompatActivity() {
         rvDdayAdapter = DdayRecyclerAdapter(
             ArrayList(Dday.getAll()),
             object : DdayRecyclerAdapter.OnItemClickListener {
-                override fun onItemClick(
-                    itemView: View,
-                    dday: Dday
-                ) {
+                override fun onItemClick(itemView: View, dday: Dday) {
                     if (!removable) {
                         goToDetailActivity(itemView, dday)
                     }
                 }
 
-                override fun onItemLongClick(
-                    itemView: View,
-                    dday: Dday
-                ) {
+                override fun onItemLongClick(itemView: View, dday: Dday) {
                     setRemovable()
                 }
             }
@@ -146,22 +150,22 @@ class MainActivity : AppCompatActivity() {
 
         val activityOptions: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
             this,
-            Pair<View, String>(view,
+            Pair(view,
                 DdayDetailActivity.VIEW_NAME_CONTAINER
             ),
-            Pair<View, String>(view.findViewById(R.id.ddayListItemDiff),
+            Pair(view.findViewById(R.id.ddayListItemDiff),
                 DdayDetailActivity.VIEW_NAME_DIFF
             ),
-            Pair<View, String>(view.findViewById(R.id.ddayListItemName),
+            Pair(view.findViewById(R.id.ddayListItemName),
                 DdayDetailActivity.VIEW_NAME_NAME
             ),
-            Pair<View, String>(view.findViewById(R.id.ddayListItemYear),
+            Pair(view.findViewById(R.id.ddayListItemYear),
                 DdayDetailActivity.VIEW_NAME_YEAR
             ),
-            Pair<View, String>(view.findViewById(R.id.ddayListItemMonth),
+            Pair(view.findViewById(R.id.ddayListItemMonth),
                 DdayDetailActivity.VIEW_NAME_MONTH
             ),
-            Pair<View, String>(view.findViewById(R.id.ddayListItemDay),
+            Pair(view.findViewById(R.id.ddayListItemDay),
                 DdayDetailActivity.VIEW_NAME_DAY
             )
         )

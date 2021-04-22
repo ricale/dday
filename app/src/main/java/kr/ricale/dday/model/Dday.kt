@@ -9,7 +9,7 @@ import kr.ricale.dday.utils.Storage
 import org.json.JSONObject
 import org.threeten.bp.LocalDate
 
-class Dday(var name: String, var date: String) {
+class Dday(var name: String, date: String) {
     companion object {
         const val KEY_PREFIX = "dday"
         const val SEPARATOR = "-"
@@ -75,6 +75,21 @@ class Dday(var name: String, var date: String) {
     var month = 0
     var day = 0
     var diffToday = 0
+    var date = date
+        set(value) {
+            if(value != "") {
+                val split = value.split("-")
+                year = split[0].toInt()
+                month = split[1].toInt()
+                day = split[2].toInt()
+
+                diffToday = DateUtil.getRemainingDays(LocalDate.of(year, month, day)).toInt()
+                if (diffToday >= 0) {
+                    diffToday += 1
+                }
+            }
+            field = value
+        }
 
     constructor(index: Int, name: String, date: String): this(name, date) {
         this.index = index
@@ -86,15 +101,6 @@ class Dday(var name: String, var date: String) {
         this.index = index
         this.name = json.getString("name")
         this.date = json.getString("date")
-        val split = this.date.split("-")
-        year = split[0].toInt()
-        month = split[1].toInt()
-        day = split[2].toInt()
-
-        diffToday = DateUtil.getRemainingDays(LocalDate.of(year, month, day)).toInt()
-        if(diffToday >= 0) {
-            diffToday += 1
-        }
     }
 
     private fun getThumbnailFilename(): String =
@@ -107,14 +113,19 @@ class Dday(var name: String, var date: String) {
         "$KEY_PREFIX$SEPARATOR$LAST_INDEX_KEY"
 
     fun save() {
-        index = getIndex()
-        val json: JSONObject = JSONObject()
+        val isNewOne = index == 0
+        if(isNewOne) {
+            index = getIndex()
+        }
+        val json = JSONObject()
         json.put("index", index.toString())
         json.put("name", name)
         json.put("date", date)
 
         Storage.set(getStorageKey(), json)
-        Storage.set(getStorageLastKey(), index)
+        if(isNewOne) {
+            Storage.set(getStorageLastKey(), index)
+        }
     }
 
     fun remove() {
@@ -141,6 +152,10 @@ class Dday(var name: String, var date: String) {
             getThumbnailFilename(),
             image
         )
+    }
+
+    fun isInNotification(): Boolean {
+        return getNotified()?.index == index
     }
 
     fun setAsNotification() {

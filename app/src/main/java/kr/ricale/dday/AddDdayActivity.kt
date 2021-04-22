@@ -23,8 +23,10 @@ import kr.ricale.dday.widget.LoadingIndicator
 import org.threeten.bp.LocalDate
 import java.io.FileNotFoundException
 
+// FIXME: rename activity
 class AddDdayActivity : AppCompatActivity() {
     companion object {
+        const val TAG = "AddDdayActivity"
         const val REQUEST_GET_IMAGE = 101
         const val IMAGE_SIZE = 1200
     }
@@ -37,7 +39,9 @@ class AddDdayActivity : AppCompatActivity() {
     private lateinit var image: Bitmap
     private lateinit var loadingIndicator: LoadingIndicator
 
-    lateinit var name: String
+    private lateinit var dday: Dday
+
+    private lateinit var name: String
 
     private var year = -1
     private var month = -1
@@ -56,7 +60,18 @@ class AddDdayActivity : AppCompatActivity() {
 
         loadingIndicator = LoadingIndicator(this)
 
-        initDefaultDate()
+        val index = intent.getIntExtra("index", 0)
+        if(index != 0) {
+            dday = Dday.get(index)
+            name = dday.name
+            nameEditText.setText(name)
+            setDateText(dday.year, dday.month, dday.day)
+            imageView.setImageBitmap(dday.getThumbnail())
+            enableOkButtonIfNeeded()
+        } else {
+            initDefaultDate()
+        }
+
         setEventHandlers()
     }
 
@@ -121,9 +136,7 @@ class AddDdayActivity : AppCompatActivity() {
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
-        startActivityForResult(intent,
-            REQUEST_GET_IMAGE
-        )
+        startActivityForResult(intent, REQUEST_GET_IMAGE)
     }
 
     private fun setEventHandlers() {
@@ -153,24 +166,30 @@ class AddDdayActivity : AppCompatActivity() {
 
         okButton.setOnClickListener {
             loadingIndicator.on()
-            val newOne = Dday(
-                name,
-                getString(
-                    R.string.date_string,
-                    year,
-                    month,
-                    dayOfMonth
-                )
+
+            val dateString = getString(
+                R.string.date_string,
+                year,
+                month,
+                dayOfMonth
             )
-            newOne.save()
+
+            val newOrUpdated = if(this::dday.isInitialized) {
+                dday.name = name
+                dday.date = dateString
+                dday
+            } else {
+                Dday(name, dateString)
+            }
+            newOrUpdated.save()
 
             AsyncTask.execute(fun () {
                 if(this::image.isInitialized) {
-                    newOne.saveThumbnail(image)
+                    newOrUpdated.saveThumbnail(image)
                 }
 
                 val returnIntent = Intent()
-                returnIntent.putExtra("index", newOne.index)
+                returnIntent.putExtra("index", newOrUpdated.index)
                 setResult(RESULT_OK, returnIntent)
                 loadingIndicator.off()
                 finish()

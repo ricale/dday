@@ -15,5 +15,6 @@
 
     <string name="image_desc_thumbnail">dday image</string>
     <string name="image_desc_remaining_list_btn">Remaining list button for dday</string>
+    <string name="image_desc_set_to_status_bar_btn">Button for setting to status bar</string>
     <string name="image_desc_set_thumbnail_btn">Button for setting thumbnail</string>
 </resources>

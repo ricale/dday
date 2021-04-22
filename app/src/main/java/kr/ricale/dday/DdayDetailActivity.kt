@@ -1,6 +1,7 @@
 package kr.ricale.dday
 
 import android.animation.AnimatorSet
+import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Guideline
+import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,12 +21,15 @@ import kr.ricale.dday.utils.DateUtil
 
 class DdayDetailActivity : AppCompatActivity() {
     companion object {
+        const val TAG = "DdayDetailActivity"
         const val VIEW_NAME_CONTAINER = "detail:container"
         const val VIEW_NAME_DIFF = "detail:diff"
         const val VIEW_NAME_NAME = "detail:name"
         const val VIEW_NAME_YEAR = "detail:year"
         const val VIEW_NAME_MONTH = "detail:month"
         const val VIEW_NAME_DAY = "detail:day"
+
+        const val REQUEST_EDIT_DDAY = 0
 
         const val SWIPE_ANIM_DURATION = 500L
         const val MIN_DISTANCE_SWIPE = 100
@@ -42,6 +47,7 @@ class DdayDetailActivity : AppCompatActivity() {
     private lateinit var tvDay: TextView
     private lateinit var btnRemainings: ImageButton
     private lateinit var btnNotification: ImageButton
+    private lateinit var btnEdit: ImageButton
 
     private lateinit var rvRemainings: RecyclerView
     private lateinit var guideline: Guideline
@@ -54,6 +60,7 @@ class DdayDetailActivity : AppCompatActivity() {
     private var touchDownY = 0.0f
     private var touchUpY = 0.0f
 
+    private var edited = false
     private var showRemainingsNow = false
     private lateinit var startAnimatorSet: AnimatorSet
     private lateinit var endAnimatorSet: AnimatorSet
@@ -70,7 +77,8 @@ class DdayDetailActivity : AppCompatActivity() {
         tvMonth = findViewById(R.id.ddayDetailMonth)
         tvDay = findViewById(R.id.ddayDetailDay)
         btnRemainings = findViewById(R.id.ddayDetailRemainingButton)
-        btnNotification= findViewById(R.id.ddayDetailStatusButton)
+        btnNotification = findViewById(R.id.ddayDetailStatusButton)
+        btnEdit = findViewById(R.id.ddayDetailEditButton)
         rvRemainings = findViewById(R.id.ddayRemainings)
         guideline = findViewById(R.id.ddayDetailGuideline2)
 
@@ -78,10 +86,38 @@ class DdayDetailActivity : AppCompatActivity() {
             intent.getIntExtra("index", 0)
         )
 
+        btnEdit.setOnClickListener {
+            if(dday.index != 0) {
+                val intent = Intent(this, AddDdayActivity::class.java)
+                intent.putExtra("index", dday.index)
+                ActivityCompat.startActivityForResult(this, intent, REQUEST_EDIT_DDAY, null)
+            }
+        }
+
         setTransition()
         setDdayInfo()
         setRemainings()
-        setDdayNotification()
+        setDdayNotificationButton()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(requestCode == REQUEST_EDIT_DDAY) {
+            if(resultCode == RESULT_OK) {
+                if(data != null) {
+                    val index = data.getIntExtra("index", 0)
+                    if(index != 0) {
+                        edited = true
+                        dday = Dday.get(index)
+                        setDdayInfo()
+                        setRemainings()
+                        if(dday.isInNotification()) {
+                            setDdayAsNotification()
+                        }
+                    }
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -99,12 +135,22 @@ class DdayDetailActivity : AppCompatActivity() {
         return super.onTouchEvent(event)
     }
 
+    // FIXME: 버튼을 하나의 컨테이널 묶어서 visibility 컨트롤
     override fun onBackPressed() {
         if(showRemainingsNow) {
             hideRemainings()
         } else {
             btnRemainings.visibility = View.GONE
             btnNotification.visibility = View.GONE
+            btnEdit.visibility = View.GONE
+
+            if(edited) {
+                clearTransition()
+                val returnIntent = Intent()
+                returnIntent.putExtra("edited", dday.index)
+                setResult(RESULT_OK, returnIntent)
+            }
+
             super.onBackPressed()
         }
     }
@@ -113,32 +159,25 @@ class DdayDetailActivity : AppCompatActivity() {
         super.onEnterAnimationComplete()
         btnRemainings.visibility = View.VISIBLE
         btnNotification.visibility = View.VISIBLE
+        btnEdit.visibility = View.VISIBLE
     }
 
     private fun setTransition() {
-        ViewCompat.setTransitionName(ctLayout,
-            VIEW_NAME_CONTAINER
-        )
-        ViewCompat.setTransitionName(tvDiff,
-            VIEW_NAME_DIFF
-        )
-        ViewCompat.setTransitionName(tvName,
-            VIEW_NAME_NAME
-        )
-        ViewCompat.setTransitionName(tvYear,
-            VIEW_NAME_YEAR
-        )
-        ViewCompat.setTransitionName(tvMonth,
-            VIEW_NAME_MONTH
-        )
-        ViewCompat.setTransitionName(tvDay,
-            VIEW_NAME_DAY
-        )
+        ViewCompat.setTransitionName(ctLayout, VIEW_NAME_CONTAINER)
+        ViewCompat.setTransitionName(tvDiff,   VIEW_NAME_DIFF)
+        ViewCompat.setTransitionName(tvName,   VIEW_NAME_NAME)
+        ViewCompat.setTransitionName(tvYear,   VIEW_NAME_YEAR)
+        ViewCompat.setTransitionName(tvMonth,  VIEW_NAME_MONTH)
+        ViewCompat.setTransitionName(tvDay,    VIEW_NAME_DAY)
+    }
 
-////        Scene Transition Animation Duration
-//        val bounds = ChangeBounds()
-//        bounds.duration = 200
-//        window.sharedElementEnterTransition = bounds
+    private fun clearTransition() {
+        ctLayout.transitionName = null
+        tvDiff.transitionName = null
+        tvName.transitionName = null
+        tvYear.transitionName = null
+        tvMonth.transitionName = null
+        tvDay.transitionName = null
     }
 
     private fun setDdayInfo() {
@@ -194,13 +233,19 @@ class DdayDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun isNotified(): Boolean {
-        return Dday.getNotified()?.index != dday.index
+    private fun setDdayAsNotification() {
+        dday.setAsNotification()
+        btnNotification.setImageResource(R.drawable.ic_bookmark_white_24dp)
+    }
+
+    private fun removeDdayFromNotification() {
+        dday.removeFromNotification()
+        btnNotification.setImageResource(R.drawable.ic_bookmark_border_white_24dp)
     }
 
     // FIXME: remove duplicated
-    private fun setDdayNotification() {
-        val imageResId = if(isNotified()) {
+    private fun setDdayNotificationButton() {
+        val imageResId = if(dday.isInNotification()) {
             R.drawable.ic_bookmark_border_white_24dp
         } else {
             R.drawable.ic_bookmark_white_24dp
@@ -208,13 +253,10 @@ class DdayDetailActivity : AppCompatActivity() {
         btnNotification.setImageResource(imageResId)
 
         btnNotification.setOnClickListener {
-            if(isNotified()) {
-                dday.setAsNotification()
-                btnNotification.setImageResource(R.drawable.ic_bookmark_white_24dp)
-
+            if(dday.isInNotification()) {
+                removeDdayFromNotification()
             } else {
-                dday.removeFromNotification()
-                btnNotification.setImageResource(R.drawable.ic_bookmark_border_white_24dp)
+                setDdayAsNotification()
             }
         }
     }

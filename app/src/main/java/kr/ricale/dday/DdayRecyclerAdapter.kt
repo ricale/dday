@@ -130,6 +130,16 @@ class DdayRecyclerAdapter(private val ddays: ArrayList<Dday>, private val listen
         notifyDataSetChanged()
     }
 
+    fun updateItem(dday: Dday) {
+        val idx = ddays
+            .mapIndexed { i, it -> if(it.index == dday.index) i else null }
+            .filterNotNull()
+            .toList()[0]
+        images.delete(dday.index)
+        ddays[idx] = dday
+        notifyItemChanged(idx)
+    }
+
     fun setCheckableMode() {
         checkable = true
         checkedIndices.clear()

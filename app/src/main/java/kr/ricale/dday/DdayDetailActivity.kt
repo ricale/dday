@@ -246,9 +246,9 @@ class DdayDetailActivity : AppCompatActivity() {
     // FIXME: remove duplicated
     private fun setDdayNotificationButton() {
         val imageResId = if(dday.isInNotification()) {
-            R.drawable.ic_bookmark_border_white_24dp
-        } else {
             R.drawable.ic_bookmark_white_24dp
+        } else {
+            R.drawable.ic_bookmark_border_white_24dp
         }
         btnNotification.setImageResource(imageResId)
 
